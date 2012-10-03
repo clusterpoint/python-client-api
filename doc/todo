@@ -1,0 +1,39 @@
+TODO:
+trūkstošās komandas,kas ir phpa?
+parametru jautājums
+helperu funkcijas searchy komandu triky parametru formēšanai
+response searchy komandām
+ieviest unittesting http://www.diveintopython.net/unit_testing/index.html
+tie importi visur ar * nav smuki
+nested content?
+atmest not none cheku seteros,jo to iekš send čeko
+ordering helperi vai cits formats ka to uzdot
+loookup requestam nav docuemnti iekš results tagiem??? vai tā ir tikai tajā versijā? wiki ir ka jābūt
+connectionam padot tipu+ip+portu viena stringā,ko parsēt kā "connection._renderRequest()" dara.
+    izmanto parseurl moduli
+unix soketa atbalts (protobuf uut)
+mēra sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt
+
+
+NEPILNĪBAS:
+neatbalsta,ka tagā ir bērna tagi un brīvs teksts. teksts tikai viens pats tagā.
+neatbalsta atribūtus
+
+BUGS:
+tikai vienu facet var padot! Katri citai vajaga savus tagus (nested_cont?)
+
+
+
+
+
+pylint un pep8
+testi kārtīgi
+komentāri kārtīgi
+
+pip
+ģenerēta dokumentācija + tutoriālīts
+
+pārējie protokoli
+performances testi un profilēšana
+
+Django (tornado uc) integrācijas jautājums, Tornado
