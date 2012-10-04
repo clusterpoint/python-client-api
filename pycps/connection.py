@@ -17,6 +17,7 @@
 
 import httplib
 import urlparse
+import socket
 
 from request import *
 
@@ -28,13 +29,16 @@ class Connection(object):
 
     """
 
-    def __init__(self, host, port, storage, user, password,
-                 document_root_xpath='document', document_id_xpath='./id',
-                 selector_url='/cgi-bin/cps2-cgi', application='PYCPS',  reply_charset=None):
-        """
+    def __init__(self, url, storage, user, password,
+                    document_root_xpath = 'document', document_id_xpath = './id',
+                    selector_url = '/cgi-bin/cps2-cgi', application='PYCPS',  reply_charset=None):
+        """ Create a new connection to CPS.
+
             Args:
                 host -- A host address string.
                 port -- A host port number.
+                url -- The connection string containing host, port and scheme of connection.
+                        Example: 'tcp://127.0.0.1:5550'.
                 storage -- A CPS storage name string.
                 user -- A user name string.
                 password -- A user password string.
@@ -46,9 +50,6 @@ class Connection(object):
                 application -- Optional application string. Default is 'PYCPS'.
                 reply_charset -- Optional reply charset string.
         """
-
-        self._host = host
-        self._port = port   # XXX: should be just included in a url string with host and type.
         self._storage = storage
         self._user = user
         self._password = password
@@ -59,19 +60,48 @@ class Connection(object):
         self.application = application
         self.reply_charset = reply_charset
 
+        self._set_url(url)
         self._open_connection()
+
+    def _set_url(self, url):
+        if url in ('unix', 'unix://', '', None):
+            self._scheme = 'socket'
+            self._host = 'unix:///usr/local/cps2/storages/{0}/storage.sock'.\
+                        format(self._storage.replace('/', '_'))
+            self._port = 0
+        else:
+            url = urlparse.urlparse(url)
+            if url.scheme.lower() == 'http':
+                self._scheme = 'http'
+                self._host = url.hostname
+                self._port = url.port if url.port else 80
+            elif url.scheme.lower() == 'unix':
+                self._scheme = 'socket'
+                self._host = url.hostname
+                self._port = 0
+            elif url.scheme.lower() == 'tcp':
+                self._scheme = 'socket'
+                self._host = url.hostname
+                slef._port = url.port if url.port else 5550
 
     def _open_connection(self):
         """ Select and use the right connection method to connect to the CPS."""
-        #TODO: add other protocols
         try:
-            self._connection = self._open_http_connection()
+            if self._scheme == 'http':
+                self._connection = self._open_http_connection()
+            else:
+                self._connection = self._open_socket_connection()
         except:
             raise ConnectionError()
 
     def _open_http_connection(self):
         """ Open a new connection socket to the CPS using the HTTP protocol."""
         return httplib.HTTPConnection(self._host, self._port, strict=False)
+
+    def _open_socket_connection(self):
+        """ Open a new connection socket to the CPS."""
+        self._connection = socket.socket(socket.AF.INET, socket.SOCK_STREAM)
+        self._connection.connect(self._host, self._port)
 
     def _send_request(self, xml_request):
         """ Send the prepared XML request block to the CPS using the corect protocol.
@@ -86,7 +116,10 @@ class Connection(object):
                 ConnectionError -- Can't establish a connection with the server.
         """
         try:
-            return self._send_http_request(xml_request)
+            if self._scheme == 'http':
+                return self._send_http_request(xml_request)
+            else:
+                return self._send_socket_request(xml_request)
         except:
             raise ConnectionError()
 
@@ -110,6 +143,17 @@ class Connection(object):
             response = self._connection.getresponse()
         data = response.read()
         return data
+
+    def _send_socket_request(self, xml_request):
+        """ Send a request via protobuf.
+
+            Args:
+                xml_request -- A fully formed xml request string for the CPS.
+
+            Returns:
+                The raw xml response string.
+        """
+        pass
 
 # Data manipulation methods
     def insert(self, *args, **kwargs):

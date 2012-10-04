@@ -101,6 +101,6 @@ if __name__ == '__main__':
             Debug.fail("Can't find valid IP for VBox test server!")
         else:
             Debug.warn("Running functests with found VBox server on {0} ...".format(ip_string))
-            t=Connection(ip_string, 80, 'test_storage', 'root', 'password')
+            t=Connection("http://{0}:{1}".format(ip_string,80), 'test_storage', 'root', 'password')
             test(t)
             Debug.ok("FUNCTESTS PASSED!")
