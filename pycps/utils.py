@@ -50,6 +50,7 @@ class Debug(object):
         if cls._DEBUG:
             print(cls.FAIL + text + cls.ENDC + '\n')
 
+
 #TODO: Do we need it?
 class RawXML(object):
     """Wrap strings to indicate that they are already formed XML and not to be escaped."""

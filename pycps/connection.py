@@ -18,7 +18,8 @@
 import httplib
 import urlparse
 
-from request  import *
+from request import *
+
 
 class Connection(object):
     """ Connection object class to hold connections with CPS and use them.
@@ -28,8 +29,8 @@ class Connection(object):
     """
 
     def __init__(self, host, port, storage, user, password,
-                    document_root_xpath = 'document', document_id_xpath = './id',
-                    selector_url = "/cgi-bin/cps2-cgi", application='PYCPS',  reply_charset=None):
+                 document_root_xpath='document', document_id_xpath='./id',
+                 selector_url='/cgi-bin/cps2-cgi', application='PYCPS',  reply_charset=None):
         """ Create a new connection to CPS.
 
             Args:
@@ -40,15 +41,15 @@ class Connection(object):
                 password -- A user password string.
 
             Keyword args:
-                document_root_tag -- A custum document root tag. Default is "document".
-                document_id_tag -- A custum document id xpath relative document root. Default is "./id".
-                selector_urli -- A nonstandart selector url for xml requests. Default is "/cgi-bin/cps2-cgi".
-                application -- Optional application string. Default is "PYCPS"
+                document_root_tag -- A custum document root tag. Default is 'document'.
+                document_id_tag -- A custum document id xpath relative document root. Default is './id'.
+                selector_urli -- A nonstandart selector url for xml requests. Default is '/cgi-bin/cps2-cgi'.
+                application -- Optional application string. Default is 'PYCPS'.
                 reply_charset -- Optional reply charset string.
         """
 
         self._host = host
-        self._port = port #XXX: should be just included in a url string with host and type.
+        self._port = port   # XXX: should be just included in a url string with host and type.
         self._storage = storage
         self._user = user
         self._password = password
@@ -71,7 +72,7 @@ class Connection(object):
 
     def _open_http_connection(self):
         """ Open a new connection socket to the CPS using the HTTP protocol."""
-        return httplib.HTTPConnection(self._host, self._port, strict = False)
+        return httplib.HTTPConnection(self._host, self._port, strict=False)
 
     def _send_request(self, xml_request):
         """ Send the prepared XML request block to the CPS using the corect protocol.

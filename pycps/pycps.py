@@ -21,10 +21,10 @@ from errors import *
 from converters import *
 from utils import *
 from connection import *
-from request  import *
-from response  import *
+from request import *
+from response import *
 
-ET.register_namespace("cps", "www.clusterpoint.com") # This has global effect.
+ET.register_namespace("cps", "www.clusterpoint.com")    # This has global effect.
 
 if __name__ == '__main__':
     Debug._DEBUG = True
@@ -44,7 +44,6 @@ if __name__ == '__main__':
         Debug.fail("DOCTESTS FAILED!")
     else:
         Debug.ok("DOCTESTS PASSED!")
-
 
 # Rudimentary functional tests using a CP server running on a local VBox instance.
     import re
@@ -79,7 +78,7 @@ if __name__ == '__main__':
         t.alternatives(term('test'), cr=1, idif=1, h=1)
         t.list_words(term('test'))
         t.list_last(docs=1, offset=0)
-        t.list_first(list ={'text':'yes'}, docs=1, offset=0)
+        t.list_first(list={'text':'yes'}, docs=1, offset=0)
         t.reindex()
         t.status()
         t.restore('tmp.tar.gz',sequence_check=False)

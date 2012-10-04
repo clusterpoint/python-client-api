@@ -24,36 +24,36 @@ from converters import *
 
 
 def _handle_response(response, command, id_xpath='./id', **kwargs):
-    _response_switch ={
-            'insert': DocumentResponse,
-            'replace': DocumentResponse,
-            'partial-replace': DocumentResponse,
-            'update': DocumentResponse,
-            'delete': DocumentResponse,
-            'search-delete': SearchDeleteResponse,
-            'reindex': Response,
-            'backup': Response,
-            'restore': Response,
-            'clear': Response,
-            'status': Response,
-            'search': SearchResponse,
-            'retrieve': LookupResponse,
-            'similar': LookupResponse,
-            'lookup': LookupResponse,
-            'alternatives': AlternativesResponse,
-            'list-words': ListWordsResponse,
-            'list-first': LookupResponse,
-            'list-last': LookupResponse,
-            'retrieve-last': LookupResponse,
-            'retrieve-first': LookupResponse,
-            'show-history': None,
-            'list-paths': None
-            }
+    _response_switch = {
+        'insert': DocumentResponse,
+        'replace': DocumentResponse,
+        'partial-replace': DocumentResponse,
+        'update': DocumentResponse,
+        'delete': DocumentResponse,
+        'search-delete': SearchDeleteResponse,
+        'reindex': Response,
+        'backup': Response,
+        'restore': Response,
+        'clear': Response,
+        'status': Response,
+        'search': SearchResponse,
+        'retrieve': LookupResponse,
+        'similar': LookupResponse,
+        'lookup': LookupResponse,
+        'alternatives': AlternativesResponse,
+        'list-words': ListWordsResponse,
+        'list-first': LookupResponse,
+        'list-last': LookupResponse,
+        'retrieve-last': LookupResponse,
+        'retrieve-first': LookupResponse,
+        'show-history': None,
+        'list-paths': None}
     try:
         request_class = _response_switch[command]
     except KeyError:
         request_class = Response
     return request_class(response, id_xpath, **kwargs)
+
 
 class Response(object):
     """ Response object to a request to Clusterpoint Storage.
@@ -195,8 +195,9 @@ class ListWordsResponse(Response):
     @property
     def words(self):
         return [{word_list.attrib['to']:
-                        dict([(word.text, word.attrib['count']) for word in word_list.findall('word')])}
+                dict([(word.text, word.attrib['count']) for word in word_list.findall('word')])}
                 for word_list in self.content.findall('list')]
+
 
 class AlternativesResponse(Response):
     @property
@@ -208,5 +209,5 @@ class AlternativesResponse(Response):
             return {to: {'count': count, 'words': words}}
 
         return [build_alternatives(alternatives.find('to'), alternatives.find('count'),
-                                    alternatives.findall('word'))
-                    for alternatives in self.content.find('alternatives_list').findall('alternatives')]
+                                   alternatives.findall('word'))
+                for alternatives in self.content.find('alternatives_list').findall('alternatives')]

@@ -15,6 +15,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with Pycps.  If not, see <http://www.gnu.org/licenses/>.
 
+
 class CPSWarning(Warning):
     """Base class for warnings in this module."""
     pass

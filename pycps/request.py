@@ -41,13 +41,13 @@ class Request(object):
 
 # These fields are for the envelope of the request.
         self.request_id = request_id
-        self.timestamp = None # TODO: implement
+        self.timestamp = None   # TODO: implement
         self.timeout = timeout
         self.type = type
 
-        self._content = {} # This holds all fields that will be included in the content subtree.
-        self._nested_content = {} #TODO: Not needed?
-        self._documents = [] # List of document strings containing documents.
+        self._content = {}  # This holds all fields that will be included in the content subtree.
+        self._nested_content = {}   # TODO: Not needed?
+        self._documents = []    # List of document strings containing documents.
 
     def set_documents(self, documents, add_ids=True):
         """ Wrap documents in the correct root tags, add id fields and convert them to xml strings.
@@ -72,20 +72,21 @@ class Request(object):
                     if child is None:
                         child = ET.Element(rel_path[0])
                         root.append(child)
-                    return make_id_tag(child, rel_path[1:], max_depth-1)
+                    return make_id_tag(child, rel_path[1:], max_depth - 1)
             make_id_tag(document, doc_id_xpath, 10).text = str(id)
 
-        doc_root_tag = self.connection.document_root_xpath # Local scope is faster.
+        doc_root_tag = self.connection.document_root_xpath  # Local scope is faster.
         doc_id_xpath = self.connection.document_id_xpath.split('/')
-        if add_ids: # documents is dict with ids as keys.
+        if add_ids:     # Documents is dict with ids as keys.
             # Convert to etrees.
-            documents = dict([(id, to_etree((document if document is not None else term('',doc_root_tag)), doc_root_tag))\
-                    for id, document in documents.items()]) # TODO: possibly ineficient
+            documents = dict([(id, to_etree((document if document is not None else
+                                             term('', doc_root_tag)), doc_root_tag))
+                             for id, document in documents.items()])     # TODO: possibly ineficient
             # If root not the same as given xpath, make new root and append to it.
             for id, document in documents.items():
                 if document.tag != doc_root_tag:
                     documents[id] = ET.Element(doc_root_tag)
-                    documents[id].append(document) # documents is still the old reference
+                    documents[id].append(document)  # documents is still the old reference
             # Insert ids in documents and collapse to a list of documents.
             for id, document in documents.items():
                 add_id(document, id)
@@ -184,7 +185,7 @@ class Request(object):
 
     def set_list(self, value):
         if value is not None:
-            self._content['list'] = '\n'.join([term(value,key) for (key,value) in value.items()])
+            self._content['list'] = '\n'.join([term(value, key) for (key, value) in value.items()])
 
     def set_ordering(self, value):
         if value is not None:
@@ -255,25 +256,25 @@ class Request(object):
         def wrap_xml_content(xml_content):
             """ Wrap XML content string in the correct CPS request envelope."""
             fields = ['<?xml version="1.0" encoding="utf-8"?>\n',
-                    '<cps:request xmlns:cps="www.clusterpoint.com">\n',
-                    '<cps:storage>', self.connection._storage, '</cps:storage>\n']
+                      '<cps:request xmlns:cps="www.clusterpoint.com">\n',
+                      '<cps:storage>', self.connection._storage, '</cps:storage>\n']
             if self.timestamp:
-                fields += [] # TODO: implement
+                fields += []    # TODO: implement
             if self.request_id:
-                fields += ['<cps:request_id>', str(self.request_id), '</cps:request_id>\n',]
+                fields += ['<cps:request_id>', str(self.request_id), '</cps:request_id>\n']
             if self.connection.reply_charset:
-                fields += [] # TODO: implement
+                fields += []    # TODO: implement
             if self.connection.application:
-                fields += ['<cps:application>', self.connection.application, '</cps:application>\n',]
+                fields += ['<cps:application>', self.connection.application, '</cps:application>\n']
             fields += ['<cps:command>', self._command, '</cps:command>\n',
-                    '<cps:user>', self.connection._user, '</cps:user>\n',
-                    '<cps:password>', self.connection._password, '</cps:password>\n']
+                       '<cps:user>', self.connection._user, '</cps:user>\n',
+                       '<cps:password>', self.connection._password, '</cps:password>\n']
             if self.timeout:
-                fields += ['<cps:timeout>', str(self.timeout), '</cps:timeout>\n',]
+                fields += ['<cps:timeout>', str(self.timeout), '</cps:timeout>\n']
             if self.type:
                 fields += ['<cps:type>', self.type, '</cps:type>\n']
             if xml_content:
-                fields +=  ['<cps:content>\n', xml_content, '\n</cps:content>\n']
+                fields += ['<cps:content>\n', xml_content, '\n</cps:content>\n']
             else:
                 fields += '<cps:content/>\n'
             fields += '</cps:request>\n'
@@ -282,7 +283,7 @@ class Request(object):
             return xml_request
 
         xml_content = []
-        if self._documents :
+        if self._documents:
             xml_content += self._documents
         for key, value in self._nested_content.items():
             if value:
@@ -303,14 +304,14 @@ class Request(object):
             Response object.
         """
         xml_request = self.get_xml_request()
-        Debug.warn('-'*25)
+        Debug.warn('-' * 25)
         Debug.warn(self._command)
         #Debug.dump("doc: \n", self._documents)
         #Debug.dump("cont: \n", self._content)
         #Debug.dump("nest cont \n", self._nested_content)
         Debug.dump("Request: \n", xml_request)
         return response._handle_response(self.connection._send_request(xml_request),
-                                            self._command, self.connection.document_id_xpath)
+                                         self._command, self.connection.document_id_xpath)
 
 
 class BackupRequest(Request):
@@ -441,7 +442,7 @@ class PartialReplaceRequest(DocumentRequest):
 
 class SearchRequest(Request):
     def __init__(self, connection, query, docs=None, offset=None, list=None, ordering=None, agregate=None,
-                facet=None, facet_size=None, stem_lang=None, exact_match=None, group=None, group_size=None, **kwargs):
+                 facet=None, facet_size=None, stem_lang=None, exact_match=None, group=None, group_size=None, **kwargs):
         """ Initize a SearchRequest object with additional fields to the base Request class.
 
             Args:
@@ -475,8 +476,8 @@ class SearchRequest(Request):
         self.add_property(self.set_docs, 'docs', docs)
         self.add_property(self.set_offset, 'offset', offset)
         self.add_property(self.set_list, 'list', list)
-        self.add_property(self.set_ordering, 'odering', ordering) #TODO: helper method for building orderings
-        self.add_property(self.set_agregate, 'agregate', agregate) #TODO: Check details
+        self.add_property(self.set_ordering, 'odering', ordering)   # TODO: helper method
+        self.add_property(self.set_agregate, 'agregate', agregate)  # TODO: Check details
         self.add_property(self.set_facet, 'facet', facet)
         self.add_property(self.set_facet_size, 'facet_size', facet_size)
         self.add_property(self.set_stem_lang, 'stem_lang', stem_lang)
@@ -547,7 +548,7 @@ class RetrieveRequest(Request):
             Keyword args:
                 See Request.__init__()
         """
-        Request.__init__(self, connection,'retrieve', **kwargs)
+        Request.__init__(self, connection, 'retrieve', **kwargs)
         self.set_doc_ids(doc_ids)
 
 
@@ -715,4 +716,4 @@ class SimilarRequest(Request):
         self.add_property(self.set_quota, 'quota', quota)
         self.add_property(self.set_offset, 'offset', offset)
         self.add_property(self.set_docs, 'docs', docs)
-        self.add_property(self.set_query, 'query', query) #TODO: add dict parametr form for query
+        self.add_property(self.set_query, 'query', query)   # TODO: add dict parametr form for query

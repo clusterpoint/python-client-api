@@ -48,12 +48,12 @@ def etree_to_dict(source):
                     if child.tag in d:
                         identical_children = True
                         l = [{key: d[key]} for key in d]
-                        l.append({child.tag : etree_to_dict_recursive(child)})
+                        l.append({child.tag: etree_to_dict_recursive(child)})
                         del d
                     else:
-                        d.update({child.tag : etree_to_dict_recursive(child)})
+                        d.update({child.tag: etree_to_dict_recursive(child)})
                 else:
-                    l.append({child.tag : etree_to_dict_recursive(child)})
+                    l.append({child.tag: etree_to_dict_recursive(child)})
             return (d if not identical_children else l)
         else:
             return parent.text
@@ -64,6 +64,7 @@ def etree_to_dict(source):
         return {source.tag: etree_to_dict_recursive(source)}
     else:
         raise TypeError("Requires an Element or an ElementTree.")
+
 
 def dict_to_etree(source, root_tag=None):
     """ Recursively load dict/list representation of a xml tree into an etree representation.
@@ -102,7 +103,7 @@ def dict_to_etree(source, root_tag=None):
         elif isinstance(source, list):
             for element in source:
                 dict_to_etree_recursive(element, parent)
-        else: # TODO: Add feature to include xml literals as special objects or a etree subtree
+        else:   # TODO: Add feature to include xml literals as special objects or a etree subtree
             parent.text = str(source)
 
     if root_tag is None:
@@ -119,6 +120,7 @@ def dict_to_etree(source, root_tag=None):
     root = ET.Element(root_tag)
     dict_to_etree_recursive(source, root)
     return root
+
 
 def to_etree(source, root_tag=None):
     """ Convert various representations of a XML structure to a etree Element
@@ -144,17 +146,18 @@ def to_etree(source, root_tag=None):
     """
     if isinstance(source, ET.ElementTree):
         return source.get_root()
-    elif isinstance(source,type(ET.Element(None))): # cElementTree.Element isn't exposed directly
+    elif isinstance(source, type(ET.Element(None))):    # cElementTree.Element isn't exposed directly
         return source
     elif isinstance(source, basestring):
         try:
             return ET.fromstring(source)
         except:
             raise XMLError(source)
-    elif hasattr(source, 'keys'): # Dict.
+    elif hasattr(source, 'keys'):   # Dict.
         return dict_to_etree(source, root_tag)
     else:
         raise XMLError(source)
+
 
 def to_raw_xml(source):
     """ Convert various representations of a XML structure to a normal XML string.
@@ -176,13 +179,14 @@ def to_raw_xml(source):
     """
     if isinstance(source, basestring):
         return source
-    elif hasattr(source, 'getiterator'): # Element or ElementTree.
+    elif hasattr(source, 'getiterator'):    # Element or ElementTree.
         return ET.tostring(source, encoding="utf-8", method="xml")
-    elif hasattr(source, 'keys'): # Dict.
+    elif hasattr(source, 'keys'):   # Dict.
         xml_root = dict_to_etree(source)
         return ET.tostring(xml_root, encoding="utf-8", method="xml")
     else:
         raise TypeError("Accepted representations of a document are string, dict and etree")
+
 
 def term(term, xpath=None, escape=True):
     """ Escapes <, > and & characters in the given term for inclusion into XML (like the search query).
@@ -222,8 +226,9 @@ def term(term, xpath=None, escape=True):
         term = cgi.escape(term)
     return ''.join(prefix + [term] + postfix)
 
+
 def query_from_dict(source):
-    """ 
+    """
     """
     parsed = ''
     for xpath, text in source.items():
