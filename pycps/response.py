@@ -24,6 +24,7 @@ from converters import *
 
 
 def _handle_response(response, command, id_xpath='./id', **kwargs):
+    """ Initialize the corect Response object from the response string based on the API command type. """
     _response_switch = {
         'insert': ModifyResponse,
         'replace': ModifyResponse,
@@ -57,24 +58,28 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
 
 class Response(object):
     """ Response object to a request to Clusterpoint Storage.
+
+        Properties:
+            seconds -- A float of seconds it took the Clusterpoint Storage to prepare this response.
+            storage_name -- The name of Clusterpoint Storage this response was recieved from.
+            command -- The command to what this response is made.
     """
     def __init__(self, response, id_xpath='./id', raise_errors=True):
-        """Convert an XML string response from CPS to a  user selected format (dict/list by default).
+        """ Parse the response string to an etree object and optionaly check for API errors.
 
             Args:
                 response -- A raw XML response block with envelope and all.
 
             Keyword args:
-                raise_errors: If True, parse the response looking for errors defined in api and
+                raise_errors -- If True, parse the response looking for errors defined in the API and
                         rise them as exceptions. Default is True.
-                id_xpath -- The document id tag xpath relative to root used for id extracting.
+                id_xpath -- The document id tag xpath relative to the document root used for id extracting.
                         Default is './id'.
 
-            Returns:
-                The procesed xml response content in the specified format.
-
-            Rises:
-                APIError: Recieved an error in server response.
+            Raises:
+                APIError -- Recieved an error in the server response.
+                APIWarning -- Recieved an nonfatal error in the server response.
+                ResponseError -- Recieved invalid response string.
         """
         Debug.dump('Raw response: \n', response)
         try:
@@ -83,10 +88,11 @@ class Response(object):
             raise ResponseError(response)
         if raise_errors:
             self._parse_for_errors()
-        self.content = self.response.find('{www.clusterpoint.com}content')
+        self._content = self.response.find('{www.clusterpoint.com}content')
         self._id_xpath = id_xpath.split('/')
 
     def _parse_for_errors(self):
+        """ Look for an error tag and raise APIError for fatal errors or APIWarning for nonfatal ones. """
         error = self.response.find('{www.clusterpoint.com}error')
         if error:
             if error.find('level').text.lower() in ('rejected', 'failed', 'error', 'fatal'):
@@ -95,16 +101,29 @@ class Response(object):
                 warnings.warn(APIWarning(error))
 
     def get_content_dict(self):
-        return etree_to_dict(self.content)['{www.clusterpoint.com}content']
+        """ Get the Clusterpoint response's content as a dict. See etree_to_dict(). """
+        return etree_to_dict(self._content)['{www.clusterpoint.com}content']
 
     def get_content_etree(self):
-        return self.content
+        """ Get the Clusterpoint response's content as an etree. """
+        return self._content
 
     def get_content_string(self):
-        return ''.join([ET.tostring(element, encoding="utf-8", method="xml") for element in list(self.content)])
+        """ Ge thet Clusterpoint response's content as a string. """
+        return ''.join([ET.tostring(element, encoding="utf-8", method="xml")
+                        for element in list(self._content)])
 
     def get_content_field(self, name):
-        fields = self.content.findall(name)
+        """ Get the contents of a specific subtag from Clusterpoint Storage's response's content tag.
+
+            Args:
+                name -- A name string of the content's subtag to be returned.
+
+            Returns:
+                A dict representing the contents of the specified field or a list or a list of dicts
+                if there are multiple fields with that tag name. Returns None if no field found.
+        """
+        fields = self._content.findall(name)
         if not fields:
             return None
         elif len(fields) == 1:
@@ -126,6 +145,11 @@ class Response(object):
 
 
 class ModifyResponse(Response):
+    """ ModifyResponse object to a request to Clusterpoint Storage.
+
+        Properties:
+            modified_ids -- A list of ids of documents modified for this response.
+    """
     @property
     def modified_ids(self):
         documents = self.get_content_field('document')
@@ -135,16 +159,46 @@ class ModifyResponse(Response):
 
 
 class SearchDeleteResponse(Response):
+    """ SearchResponse object to a request to Clusterpoint Storage.
+
+        Properties:
+            hits -- The number of deleted documents.
+    """
     @property
     def hits(self):
         return int(self.get_content_field('hits'))
 
 
 class ListResponse(Response):
+    """ ListResponse object to a request to Clusterpoint Storage.
+
+        Properties:
+            found -- The number of documents returned.
+            from_document -- The offset from the begining of the result set.
+            to_document -- Offeset pluss document count.
+            more -- Number of documents matching but not returned.
+            hits -- The number of documents matching the query.
+    """
     def _get_doc_list(self):
         # ET.Element returns a list of subelements if pased to the inbuilt list().
-        return list(self.content.find('results'))
-    def get_documents(self, format='dict'):
+        return list(self._content.find('results'))
+
+    def get_documents(self, doc_format='dict'):
+        """ Get the documents returned from Storege in this response.
+
+            Keyword args:
+                doc_format -- Specifies the doc_format for the returned documents.
+                    Can be 'dict', 'etree' or 'string'. Default is 'dict'.
+
+            Returns:
+                A dict where keys are document ids and values depending of the required doc_format:
+                    A dict representations of documents (see etree_to_dict());
+                    A etree Element representing the document;
+                    A raw XML document string.
+
+            Raises:
+                ParameterError -- The doc_format value is not allowed.
+        """
         def get_doc_id(root, rel_path):
             if not rel_path:
                 return root.text
@@ -154,15 +208,17 @@ class ListResponse(Response):
                     return None
                 return get_doc_id(child, rel_path[1:])
 
-        if format == 'dict':
+        if doc_format == 'dict':
             return dict([(get_doc_id(document, self._id_xpath), etree_to_dict(document)['document']) for
                         document in self._get_doc_list()])
-        elif format == 'etree':
-            return self._get_doc_list()
-        elif format in ('', None, 'string'):
-            return [ET.tostring(document) for document in self._get_doc_list()]
+        elif doc_format == 'etree':
+            return dict([(get_doc_id(document, self._id_xpath), document) for
+                        document in self._get_doc_list()])
+        elif doc_format in ('', None, 'string'):
+            return dict([(get_doc_id(document, self._id_xpath), ET.tostring(document)) for
+                        document in self._get_doc_list()])
         else:
-            raise ParameterError('format=' + format)
+            raise ParameterError("doc_format=" + doc_format)
 
     @property
     def found(self):
@@ -176,48 +232,83 @@ class ListResponse(Response):
     def to_document(self):
         return int(self.get_content_field('to'))
 
-
-class LookupResponse(ListResponse):
-    def _get_doc_list(self):
-        # Lookup returns documents in content tag, not in results subtag.
-        return self.content.findall('document')
-
-
-class SearchResponse(ListResponse):
-    @property
-    def facets(self):
-        return self.get_content_field('facets')
-
-    @property
-    def aggregate(self):
-        return self.get_content_field('agregate')
-
     @property
     def more(self):
-        return self.get_content_field('more')
+        # More is in form '=<number>', so drop the '='.
+        return int(self.get_content_field('more')[1:])
 
     @property
     def hits(self):
         return int(self.get_content_field('hits'))
 
 
+class LookupResponse(ListResponse):
+    """ LookupResponse object to a request to Clusterpoint Storage. """
+    def _get_doc_list(self):
+        # Lookup returns documents in content tag, not in results subtag.
+        return self._content.findall('document')
+
+
+class SearchResponse(ListResponse):
+    """ SearchResponse object to a request to Clusterpoint Storage. """
+    def get_facets(self):
+        """ Get facets from the response.
+
+            Returns:
+                A dict in form:
+                    {<facet path>: {<term>: <number of hits for this term>
+                                    } // Repeated for every term.
+                    } // Repeated for every facet.
+        """
+        return dict([(facet.attrib['path'], dict([(term.text, int(term.attrib['hits']))
+                                                  for term in facet.findall('term')]))
+                     for facet in self._content.findall('facet')])
+
+    def get_aggregate(self):
+        """ Get aggregate data.
+
+            Returns:
+                A dict in with queries as keys and results as values.
+        """
+        return dic([(aggregate.find('query').text, aggregate.find('data').text)
+                   for aggregate in self._content.findall('aggregate')])
+
+
 class WordsResponse(Response):
-    @property
-    def words(self):
-        return [{word_list.attrib['to']:
-                dict([(word.text, word.attrib['count']) for word in word_list.findall('word')])}
-                for word_list in self.content.findall('list')]
+    """ WordResponse object to a request to Clusterpoint Storage. """
+    def get_words(self):
+        """ Get words matching the request search terms.
+
+            Returns:
+                A dict in form:
+                    {<search term>: {<matching word>: <number of times this word is found in the Storage>
+                                    } // Repeated for every matching word.
+                    } // Repeated for every search term.
+        """
+        return dict([(word_list.attrib['to'], dict([(word.text, word.attrib['count'])
+                                                    for word in word_list.findall('word')]))
+                     for word_list in self._content.findall('list')])
 
 
 class AlternativesResponse(Response):
-    @property
-    def alternatives(self):
-        def build_alternatives(to, count, words):
-            to = to.text
-            count = int(count.text)
-            words = dict([(word.text, word.attrib) for word in words])
-            return {to: {'count': count, 'words': words}}
+    """ AlternativesResponse object to a request to Clusterpoint Storage. """
+    def get_alternatives(self):
+        """ Get the spelling alternatives for search terms.
 
-        return [build_alternatives(alternatives.find('to'), alternatives.find('count'),
-                                   alternatives.findall('word'))
-                for alternatives in self.content.find('alternatives_list').findall('alternatives')]
+            Returns:
+                A dict in form:
+                {<search term>: {'count': <number of times the searh term occurs in the Storage>,
+                                 'words': {<an alternative>: {'count': <number of times the alternative occurs in the Storage>,
+                                                              'cr': <cr value of the alternative>,
+                                                              'idif': <idif value of the alternative>,
+                                                              'h': <h value of the alternative>}
+                                          } // Repeated for every alternative.
+                                }
+                } // Repeated for every search term
+        """
+        return dict([(alternatives.find('to').text,
+                      {'count': int(alternatives.find('count').text),
+                       'words': dict([(word.text, word.attrib)
+                                      for word in alternatives.findall('word')])})
+                     for alternatives in
+                        self._content.find('alternatives_list').findall('alternatives')])

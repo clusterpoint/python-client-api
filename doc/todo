@@ -29,9 +29,8 @@ iespējama C extensions taisīšana
 Django (tornado uc) integrācijas jautājums, Tornado
 
 
-query, list ordering 
-    meklējumu padošanas problēma (var būt nestots dziļi, var būt ar iekavām, & un tml)
-        vai palīgfunkcijas visas izteiksmes būvēšanai?
+list ordering 
+query palīgfunckijas
 smukas konsistentas errors
 set parameter jebkādam custum parameteram.
 

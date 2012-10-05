@@ -21,32 +21,6 @@ class CPSWarning(Warning):
     pass
 
 
-class APIWarning(CPSWarning):
-    """Warning raised for CPS API errors that shouldn't have resulted in data loss.
-
-    Attributes:
-        code: Error code.
-        text: Error textual message.
-        level: Error severity.
-        source: Subsystem in which the error occurred.
-        message: Longer error message.
-        document_id: List of ocument_ids that the error refers to.
-                    Present only on some errors.
-    """
-    def __init__(self, xml_error):
-        self.code = xml_error.find('code').text
-        self.text = xml_error.find('text').text
-        self.level = xml_error.find('level').text
-        self.source = xml_error.find('source').text
-        self.message = xml_error.find('message').text
-        self.document_id = []
-        for id in xml_error.findall('document_id'):
-            self.document_id.append(id.text)
-
-    def __str__(self):
-        return self.text
-
-
 class CPSError(Exception):
     """Base class for exceptions in this module."""
     pass
@@ -82,7 +56,7 @@ class XMLError(CPSError):
 
 
 class ParameterError(CPSError):
-    """Exception raised for bad parameters to pycps api.
+    """Exception raised for bad parameter values.
 
     Attributes:
         dump: An optional parameter dump.
@@ -123,8 +97,34 @@ class APIError(CPSError):
         return self.text
 
 
+class APIWarning(CPSWarning):
+    """Warning raised for CPS API errors that shouldn't have resulted in data loss.
+
+    Attributes:
+        code: Error code.
+        text: Error textual message.
+        level: Error severity.
+        source: Subsystem in which the error occurred.
+        message: Longer error message.
+        document_id: List of ocument_ids that the error refers to.
+                    Present only on some errors.
+    """
+    def __init__(self, xml_error):
+        self.code = xml_error.find('code').text
+        self.text = xml_error.find('text').text
+        self.level = xml_error.find('level').text
+        self.source = xml_error.find('source').text
+        self.message = xml_error.find('message').text
+        self.document_id = []
+        for id in xml_error.findall('document_id'):
+            self.document_id.append(id.text)
+
+    def __str__(self):
+        return self.text
+
+
 class ResponseError(CPSError):
-    """Exception raised for invalid Clusterpoint response strings
+    """Exception raised for invalid Clusterpoint response strings.
 
     Attributes:
         response -- The xml response string.
