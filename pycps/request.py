@@ -54,7 +54,7 @@ class Request(object):
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
 
             Keyword args:
@@ -298,7 +298,7 @@ class Request(object):
         return wrap_xml_content(xml_content)
 
     def send(self):
-        """ Send a xml string version of content through the connection.
+        """ Send an XML string version of content through the connection.
 
         Returns:
             Response object.
@@ -351,14 +351,14 @@ class RestoreRequest(Request):
         self.add_property(self.set_sequence_check, 'sequence_check', sequence_check)
 
 
-class DocumentRequest(Request):
+class ModifyRequest(Request):
     """ Base request for insert, update, replace and partial_replace command requests."""
     def __init__(self, connection, documents, add_ids=True, **kwargs):
         """ Initize a DocumentoRequest object with additional fields to the base Request class.
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
                 See Request.__init__()
 
@@ -372,71 +372,71 @@ class DocumentRequest(Request):
         self.set_documents(documents, add_ids)
 
 
-class InsertRequest(DocumentRequest):
+class InsertRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """ Initize a InsertsRequest object with additional fields to the base Request class.
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
                 See Request.__init__().
 
             Keyword args:
                 See Request.__init__().
         """
-        DocumentRequest.__init__(self, *args, **kwargs)
+        ModifyRequest.__init__(self, *args, **kwargs)
         self._command = 'insert'
 
 
-class UpdateRequest(DocumentRequest):
+class UpdateRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """ Initize a UpdateRequest object with additional fields to the base Request class.
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
                 See Request.__init__().
 
             Keyword args:
                 See Request.__init__().
         """
-        DocumentRequest.__init__(self, *args, **kwargs)
+        ModifyRequest.__init__(self, *args, **kwargs)
         self._command = 'update'
 
 
-class ReplaceRequest(DocumentRequest):
+class ReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """ Initize a ReplaceRequest object with additional fields to the base Request class.
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
                 See Request.__init__().
 
             Keyword args:
                 See Request.__init__().
         """
-        DocumentRequest.__init__(self, *args, **kwargs)
+        ModifyRequest.__init__(self, *args, **kwargs)
         self._command = 'replace'
 
 
-class PartialReplaceRequest(DocumentRequest):
+class PartialReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """ Initize a PartialReplaceRequest object with additional fields to the base Request class.
 
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
                 See Request.__init__().
 
             Keyword args:
                 See Request.__init__().
         """
-        DocumentRequest.__init__(self, *args, **kwargs)
+        ModifyRequest.__init__(self, *args, **kwargs)
         self._command = 'partial-replace'
 
 

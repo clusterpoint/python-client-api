@@ -23,10 +23,10 @@ from errors import *
 
 
 def etree_to_dict(source):
-    """ Recursively load dict/list representation of a cml tree into an etree representation.
+    """ Recursively load dict/list representation of an XML tree into an etree representation.
 
         Args:
-            source: An etree Element or ElementTree.
+            source -- An etree Element or ElementTree.
 
         Returns:
             A dictionary representing sorce's xml structure where tags with multiple identical childrens
@@ -67,18 +67,18 @@ def etree_to_dict(source):
 
 
 def dict_to_etree(source, root_tag=None):
-    """ Recursively load dict/list representation of a xml tree into an etree representation.
+    """ Recursively load dict/list representation of an XML tree into an etree representation.
 
         Args:
-            source: A dictionary representing a xml document where identical children tags are
+            source -- A dictionary representing an XML document where identical children tags are
                     countained in a list.
 
         Keyword args:
-            root_tag: A parent tag in which to wrap the xml tree. If None, and the source dict
+            root_tag -- A parent tag in which to wrap the xml tree. If None, and the source dict
                     contains multiple root items, a list of etree's Elements will be returned.
 
         Returns:
-            An ET.Element which is the root of a xml tree or a list of these.
+            An ET.Element which is the root of an XML tree or a list of these.
 
     >>> dict_to_etree({'foo': 'lorem'}) #doctest: +ELLIPSIS
     <Element 'foo' at 0x...>
@@ -123,13 +123,13 @@ def dict_to_etree(source, root_tag=None):
 
 
 def to_etree(source, root_tag=None):
-    """ Convert various representations of a XML structure to a etree Element
+    """ Convert various representations of an XML structure to a etree Element
 
         Args:
-            source: The source object to be converted - ET.Element\ElementTree, dict or string.
+            source -- The source object to be converted - ET.Element\ElementTree, dict or string.
 
         Keyword args:
-            root_tag: A optional parent tag in which to wrap the xml tree if no root in dict representation.
+            root_tag -- A optional parent tag in which to wrap the xml tree if no root in dict representation.
                     See dict_to_etree()
 
         Returns:
@@ -160,10 +160,10 @@ def to_etree(source, root_tag=None):
 
 
 def to_raw_xml(source):
-    """ Convert various representations of a XML structure to a normal XML string.
+    """ Convert various representations of an XML structure to a normal XML string.
 
         Args:
-            source: The source object to be converted - ET.Element, dict or string.
+            source -- The source object to be converted - ET.Element, dict or string.
 
         Returns:
             A rew xml string matching the source object.
@@ -196,11 +196,11 @@ def term(term, xpath=None, escape=True):
             any search operators at all, it's probably better to use query_term().
 
         Args:
-            term: The term to be escaped (e.g. a search query term).
+            term -- The term to be escaped (e.g. a search query term).
 
         Keyword args:
-            xpath: An optional xpath, to be specified if the search term is to be searched under a specific xpath.
-            escape: an optional parameter - whether to escape the term's XML. Default is True.
+            xpath -- An optional xpath, to be specified if the search term is to be searched under a specific xpath.
+            escape -- An optional parameter - whether to escape the term's XML. Default is True.
 
         Returns:
             Properly escaped xml string for queries.

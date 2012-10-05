@@ -118,7 +118,7 @@ class Connection(object):
 
         Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document. If Ids are integrated in document or not needed,
+                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
                             use add_ids=False and pass list of documents or single document instead of the dict.
 
             Keyword args:
@@ -127,7 +127,7 @@ class Connection(object):
                 See Request.__init__().
 
         Returns:
-            A DocumentResponse object.
+            A ModifyResponse object.
         """
         return InsertRequest(self, *args, **kwargs).send()
 
@@ -141,7 +141,7 @@ class Connection(object):
             See Request.__init__().
 
         Returns:
-            A DocumentResponse object.
+            A ModifyResponse object.
         """
         return ReplaceRequest(self, *args, **kwargs).send()
 
@@ -155,7 +155,7 @@ class Connection(object):
             See Request.__init__().
 
         Returns:
-            A DocumentResponse object.
+            A ModifyResponse object.
         """
         return PartialReplaceRequest(self, *args, **kwargs).send()
 
@@ -169,7 +169,7 @@ class Connection(object):
             See Request.__init__().
 
         Returns:
-            A DocumentResponse object.
+            A ModifyResponse object.
         """
         return UpdateRequest(self, *args, **kwargs).send()
 
@@ -183,7 +183,7 @@ class Connection(object):
             See Request.__init__().
 
         Returns:
-            A DocumentResponse object.
+            A ModifyResponse object.
         """
         return DeleteRequest(self, *args, **kwargs).send()
 
@@ -313,7 +313,7 @@ class Connection(object):
             See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
             See insert()
 
         """
@@ -334,7 +334,7 @@ class Connection(object):
             See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
         """
         return SimilarRequest(self, *args, **kwargs).send()
 
@@ -392,7 +392,7 @@ class Connection(object):
             See Request.__init__()
 
         Returns:
-            A ListWordsResponse object.
+            A WordsResponse object.
         """
         return ListWordsRequest(self, *args, **kwargs).send()
 
@@ -407,7 +407,7 @@ class Connection(object):
                 See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
         """
         return ListFirstRequest(self, *args, **kwargs).send()
 
@@ -423,7 +423,7 @@ class Connection(object):
                 See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
         """
         return ListLastRequest(self, *args, **kwargs).send()
 
@@ -438,7 +438,7 @@ class Connection(object):
                 See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
         """
         return RetrieveLastRequest(self, *args, **kwargs).send()
 
@@ -453,6 +453,6 @@ class Connection(object):
                 See Request.__init__()
 
         Returns:
-            A LookupResponse object.
+            A ListResponse object.
         """
         return RetrieveFirstRequest(self, *args, **kwargs).send()

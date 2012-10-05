@@ -25,11 +25,11 @@ from converters import *
 
 def _handle_response(response, command, id_xpath='./id', **kwargs):
     _response_switch = {
-        'insert': DocumentResponse,
-        'replace': DocumentResponse,
-        'partial-replace': DocumentResponse,
-        'update': DocumentResponse,
-        'delete': DocumentResponse,
+        'insert': ModifyResponse,
+        'replace': ModifyResponse,
+        'partial-replace': ModifyResponse,
+        'update': ModifyResponse,
+        'delete': ModifyResponse,
         'search-delete': SearchDeleteResponse,
         'reindex': Response,
         'backup': Response,
@@ -37,15 +37,15 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'clear': Response,
         'status': Response,
         'search': SearchResponse,
-        'retrieve': LookupResponse,
-        'similar': LookupResponse,
+        'retrieve': ListResponse,
+        'similar': ListResponse,
         'lookup': LookupResponse,
         'alternatives': AlternativesResponse,
-        'list-words': ListWordsResponse,
-        'list-first': LookupResponse,
-        'list-last': LookupResponse,
-        'retrieve-last': LookupResponse,
-        'retrieve-first': LookupResponse,
+        'list-words': WordsResponse,
+        'list-first': ListResponse,
+        'list-last': ListResponse,
+        'retrieve-last': ListResponse,
+        'retrieve-first': ListResponse,
         'show-history': None,
         'list-paths': None}
     try:
@@ -59,7 +59,7 @@ class Response(object):
     """ Response object to a request to Clusterpoint Storage.
     """
     def __init__(self, response, id_xpath='./id', raise_errors=True):
-        """Convert a xml string response from CPS to a  user selected format (dict/list by default).
+        """Convert an XML string response from CPS to a  user selected format (dict/list by default).
 
             Args:
                 response -- A raw XML response block with envelope and all.
@@ -125,7 +125,7 @@ class Response(object):
         return self.response.find('{www.clusterpoint.com}command').text
 
 
-class DocumentResponse(Response):
+class ModifyResponse(Response):
     @property
     def modified_ids(self):
         documents = self.get_content_field('document')
@@ -140,8 +140,11 @@ class SearchDeleteResponse(Response):
         return int(self.get_content_field('hits'))
 
 
-class LookupResponse(Response):
-    def get_documents(self, return_format='dict'):
+class ListResponse(Response):
+    def _get_doc_list(self):
+        # ET.Element returns a list of subelements if pased to the inbuilt list().
+        return list(self.content.find('results'))
+    def get_documents(self, format='dict'):
         def get_doc_id(root, rel_path):
             if not rel_path:
                 return root.text
@@ -151,14 +154,15 @@ class LookupResponse(Response):
                     return None
                 return get_doc_id(child, rel_path[1:])
 
-        if return_format == 'dict':
+        if format == 'dict':
             return dict([(get_doc_id(document, self._id_xpath), etree_to_dict(document)['document']) for
-                        document in list(self.content.find('results'))])
-            return self.get_content_field('results')
-        elif return_format == 'etree':
-            list(self.content.find('results'))
+                        document in self._get_doc_list()])
+        elif format == 'etree':
+            return self._get_doc_list()
+        elif format in ('', None, 'string'):
+            return [ET.tostring(document) for document in self._get_doc_list()]
         else:
-            raise ParameterError('return_format=' + return_format)
+            raise ParameterError('format=' + format)
 
     @property
     def found(self):
@@ -173,7 +177,13 @@ class LookupResponse(Response):
         return int(self.get_content_field('to'))
 
 
-class SearchResponse(LookupResponse):
+class LookupResponse(ListResponse):
+    def _get_doc_list(self):
+        # Lookup returns documents in content tag, not in results subtag.
+        return self.content.findall('document')
+
+
+class SearchResponse(ListResponse):
     @property
     def facets(self):
         return self.get_content_field('facets')
@@ -191,7 +201,7 @@ class SearchResponse(LookupResponse):
         return int(self.get_content_field('hits'))
 
 
-class ListWordsResponse(Response):
+class WordsResponse(Response):
     @property
     def words(self):
         return [{word_list.attrib['to']:
