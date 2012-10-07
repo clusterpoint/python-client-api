@@ -29,7 +29,7 @@ iespējama C extensions taisīšana
 Django (tornado uc) integrācijas jautājums, Tornado
 
 
-list ordering 
+list un ordering, agregate un kas tur vel.
 query palīgfunckijas
 smukas konsistentas errors
 set parameter jebkādam custum parameteram.
@@ -39,3 +39,11 @@ iziet cauri php meklēt neatbilstības
 autoģēnerēta reference
 tutoriālitis
 snipeti wiki katrai komandai
+
+
+eskeipošana:
+    "   &quot;
+    '   &apos;
+    <   &lt;
+    >   &gt;
+    &   &amp

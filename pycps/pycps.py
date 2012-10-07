@@ -23,6 +23,7 @@ from utils import *
 from connection import *
 from request import *
 from response import *
+import query
 
 ET.register_namespace("cps", "www.clusterpoint.com")    # This has global effect.
 
@@ -37,13 +38,19 @@ if __name__ == '__main__':
     import connection
     import request
     import response
+    import query
 
-    Debug.warn("Running doctests ...")
-    failure_count, test_count = doctest.testmod(converters)
-    if failure_count:
-        Debug.fail("DOCTESTS FAILED!")
-    else:
-        Debug.ok("DOCTESTS PASSED!")
+    def doctest_a_module(module):
+        Debug.warn("Running doctests on {0} module ...".format(module.__name__))
+        failure_count, test_count = doctest.testmod(module)
+        if failure_count:
+            Debug.fail("DOCTESTS FAILED!")
+            raise Exception()
+        else:
+            Debug.ok("DOCTESTS PASSED!")
+
+    doctest_a_module(converters)
+    doctest_a_module(query)
 
 # Rudimentary functional tests using a CP server running on a local VBox instance.
     import re
@@ -75,8 +82,8 @@ if __name__ == '__main__':
         t.retrieve([11,12])
         t.similar(12, 2, 1, docs=2)
         t.lookup([12,15], list={'title': 'no'})
-        t.alternatives(term('test'), cr=1, idif=1, h=1)
-        t.list_words(term('test'))
+        t.alternatives(query.term('test'), cr=1, idif=1, h=1)
+        t.list_words(query.term('test'))
         t.list_last(docs=1, offset=0)
         t.list_first(list={'text':'yes'}, docs=1, offset=0)
         t.reindex()

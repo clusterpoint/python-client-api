@@ -19,6 +19,7 @@ import xml.etree.cElementTree as ET
 
 from utils import *
 from converters import *
+import query
 import response
 
 
@@ -80,7 +81,7 @@ class Request(object):
         if add_ids:     # Documents is dict with ids as keys.
             # Convert to etrees.
             documents = dict([(id, to_etree((document if document is not None else
-                                             term('', doc_root_tag)), doc_root_tag))
+                                             query.term('', doc_root_tag)), doc_root_tag))
                              for id, document in documents.items()])     # TODO: possibly ineficient
             # If root not the same as given xpath, make new root and append to it.
             for id, document in documents.items():
@@ -171,7 +172,7 @@ class Request(object):
         if isinstance(value, basestring) or value is None:
             self._content['query'] = value
         elif hasattr(value, 'keys'):
-            self._content['query'] = query_from_dict(value)
+            self._content['query'] = query.terms_from_dict(value)
         else:
             raise TypeError("Query must be a string or dict. Got: " + type(value) + " insted!")
 
@@ -185,7 +186,7 @@ class Request(object):
 
     def set_list(self, value):
         if value is not None:
-            self._content['list'] = '\n'.join([term(value, key) for (key, value) in value.items()])
+            self._content['list'] = '\n'.join([query.term(value, key) for (key, value) in value.items()])
 
     def set_ordering(self, value):
         if value is not None:
