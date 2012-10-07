@@ -48,7 +48,9 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'retrieve-last': ListResponse,
         'retrieve-first': ListResponse,
         'show-history': None,
-        'list-paths': None}
+        'list-paths': None,
+        'list-facets': None,
+        'similar-text': None}
     try:
         request_class = _response_switch[command]
     except KeyError:
@@ -311,4 +313,4 @@ class AlternativesResponse(Response):
                        'words': dict([(word.text, word.attrib)
                                       for word in alternatives.findall('word')])})
                      for alternatives in
-                        self._content.find('alternatives_list').findall('alternatives')])
+                     self._content.find('alternatives_list').findall('alternatives')])

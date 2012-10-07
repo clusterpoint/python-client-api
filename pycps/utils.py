@@ -59,9 +59,9 @@ class RawXML(object):
         """Create wraper object and store the raw string in it.
 
         Args:
-            raw_string: An already formated XML string to be nested in a document.
+            raw_string -- An already formated XML string to be nested in a document.
 
         Attrbutes:
-            raw_string: The wraped string.
+            raw_string -- The wraped string.
     """
         self.raw_string = raw_string

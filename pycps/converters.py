@@ -192,15 +192,13 @@ def term(term, xpath=None, escape=True):
     """ Escapes <, > and & characters in the given term for inclusion into XML (like the search query).
         Also wraps the term in XML tags if xpath is specified.
         Note that this function doesn't escape the @, $, " and other symbols that are meaningful in a search query.
-            If You want to escape input that comes directly from the user and that isn't supposed to contain
-            any search operators at all, it's probably better to use query_term().
 
         Args:
-            term -- The term to be escaped (e.g. a search query term).
+            term -- The term text to be escaped (e.g. a search query term).
 
         Keyword args:
-            xpath -- An optional xpath, to be specified if the search term is to be searched under a specific xpath.
-            escape -- An optional parameter - whether to escape the term's XML. Default is True.
+            xpath -- An optional xpath, to be specified if the term is to wraped in tags.
+            escape -- An optional parameter - whether to escape the term's XML characters. Default is True.
 
         Returns:
             Properly escaped xml string for queries.

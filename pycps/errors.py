@@ -17,33 +17,33 @@
 
 
 class CPSWarning(Warning):
-    """Base class for warnings in this module."""
+    """ Base class for warnings in this module. """
     pass
 
 
 class CPSError(Exception):
-    """Base class for exceptions in this module."""
+    """ Base class for exceptions in this module. """
     pass
 
 
 class ConnectionError(CPSError):
-    """Exception raised for connection problems with the Clusterpoint Storage.
+    """ Exception raised for connection problems with the Clusterpoint Storage.
 
     Attributes:
-        message: An optional error message.
+        message -- An optional error message.
     """
     def __init__(self, message=None):
         self.message = message
 
     def __str__(self):
-        return "Unable to connect to the Clusterpoint server! " + self.text
+        return "Unable to connect to the Clusterpoint server! " + self.message
 
 
 class XMLError(CPSError):
     """Exception raised for bad XML document.
 
     Attributes:
-        dump: An optional xml dump.
+        dump -- An optional xml dump.
     """
     def __init__(self, dump=None):
         self.dump = dump
@@ -59,7 +59,7 @@ class ParameterError(CPSError):
     """Exception raised for bad parameter values.
 
     Attributes:
-        dump: An optional parameter dump.
+        dump -- An optional parameter dump.
     """
     def __init__(self, dump=None):
         self.dump = dump
@@ -75,12 +75,12 @@ class APIError(CPSError):
     """Exception raised for CPS API errors possibly indicating data loss.
 
     Attributes:
-        code: Error code.
-        text: Error textual message.
-        level: Error severity.
-        source: Subsystem in which the error occurred.
-        message: Longer error message.
-        document_id: List of ocument_ids that the error refers to.
+        code -- Error code.
+        text -- Error textual message.
+        level -- Error severity.
+        source -- Subsystem in which the error occurred.
+        message -- Longer error message.
+        document_id -- List of ocument_ids that the error refers to.
                     Present only on some errors.
     """
     def __init__(self, xml_error):
@@ -89,9 +89,7 @@ class APIError(CPSError):
         self.level = xml_error.find('level').text
         self.source = xml_error.find('source').text
         self.message = xml_error.find('message').text
-        self.document_id = []
-        for id in xml_error.findall('document_id'):
-            self.document_id.append(id.text)
+        self.document_id = [document_id.text for document_id in xml_error.findall('document_id')]
 
     def __str__(self):
         return self.text
@@ -101,12 +99,12 @@ class APIWarning(CPSWarning):
     """Warning raised for CPS API errors that shouldn't have resulted in data loss.
 
     Attributes:
-        code: Error code.
-        text: Error textual message.
-        level: Error severity.
-        source: Subsystem in which the error occurred.
-        message: Longer error message.
-        document_id: List of ocument_ids that the error refers to.
+        code -- Error code.
+        text -- Error textual message.
+        level -- Error severity.
+        source -- Subsystem in which the error occurred.
+        message -- Longer error message.
+        document_id -- List of ocument_ids that the error refers to.
                     Present only on some errors.
     """
     def __init__(self, xml_error):
@@ -115,9 +113,7 @@ class APIWarning(CPSWarning):
         self.level = xml_error.find('level').text
         self.source = xml_error.find('source').text
         self.message = xml_error.find('message').text
-        self.document_id = []
-        for id in xml_error.findall('document_id'):
-            self.document_id.append(id.text)
+        self.document_id = [document_id.text for document_id in xml_error.findall('document_id')]
 
     def __str__(self):
         return self.text
