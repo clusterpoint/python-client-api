@@ -84,7 +84,7 @@ class APIError(CPSError):
                     Present only on some errors.
     """
     def __init__(self, xml_error):
-        self.code = xml_error.find('code').text
+        self.code = int(xml_error.find('code').text)
         self.text = xml_error.find('text').text
         self.level = xml_error.find('level').text
         self.source = xml_error.find('source').text

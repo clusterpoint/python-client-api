@@ -73,7 +73,7 @@ if __name__ == '__main__':
         t.update({4: {'text':'lorem'}})
         t.update({34: {'title':'Far fetched.', 'text': 'Something.'}})
         t.delete([3,1])
-        t.search({'title':'lorem'})
+        t.search(query.terms_from_dict({'title':'lorem'}))
         t.search_delete({'title':'lorem'})
         t.insert({11: {'title':'test','text':'11-test'}, 12: {'title':'test','text':'12-test'},\
                 13: {'title':'test','text':'13-test'},14: {'title':'test','text':'14-test'},\
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         t.list_first(list={'text':'yes'}, docs=1, offset=0)
         t.reindex()
         t.status()
-        t.restore('tmp.tar.gz',sequence_check=False)
+        #t.restore('tmp.tar.gz',sequence_check=False)
     try:
         vbox_string = subprocess.check_output(["VBoxManage", "guestproperty", "enumerate", "CPS2"])
     except:

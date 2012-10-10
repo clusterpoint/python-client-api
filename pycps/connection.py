@@ -199,7 +199,7 @@ class Connection(object):
         Returns:
             A SearchDeleteResponse object.
         """
-        return SearchRequest(self, *args, **kwargs).send()
+        return SearchDeleteRequest(self, *args, **kwargs).send()
 
     def reindex(self, **kwargs):
         """ Reindex all of the documents already in the Storage.
@@ -236,7 +236,7 @@ class Connection(object):
                         File name must end with '.tar.gz'.
 
         Keyword args:
-            sequence_check --  Ccheck for valid incremental backup sequence if True.
+            sequence_check --  Check for valid incremental backup sequence if True.
                         Default is True.
             See Request.__init__().
 
@@ -338,6 +338,25 @@ class Connection(object):
         """
         return SimilarRequest(self, *args, **kwargs).send()
 
+    def similar_text(self, *args, **kwargs):
+        """ Search for documents that are similar to directly supplied text or to the textual content of an existing document.
+
+        Args:
+            text -- Text to found something similar to.
+            len -- Number of keywords to extract from the source.
+            quota -- Minimum number of keywords matching in the destination.
+
+        Keyword args:
+            offset -- Number of results to skip before returning the following ones.
+            docs -- Number of documents to retrieve. Default is 10.
+            query -- An optional query that all found documents have to match against. See Search().
+            See Request.__init__()
+
+        Returns:
+            A ListResponse object.
+        """
+        return SimilarRequest(self, *args, mode='text', **kwargs).send()
+
     def lookup(self, *args, **kwargs):
         """  Search for a document in the Storage by it's id.
 
@@ -397,7 +416,7 @@ class Connection(object):
         return ListWordsRequest(self, *args, **kwargs).send()
 
     def list_first(self, *args, **kwargs):
-        """ Search  for documents in the Storage that have been inserted, updated, or replaced the longest time ago.
+        """ Search for documents in the Storage that have been inserted, updated, or replaced the longest time ago.
         Keyword args:
                 list -- Defines which tags of the search results should be listed in the response.
                         A dict with tag xpaths as keys and listing option strings ('yes', 'no', 'snippet',
@@ -412,7 +431,7 @@ class Connection(object):
         return ListFirstRequest(self, *args, **kwargs).send()
 
     def list_last(self, *args, **kwargs):
-        """ Searches  for documents in the Storage that have been inserted, updated, or replaced most recently.
+        """ Search for documents in the Storage that have been inserted, updated, or replaced most recently.
 
         Keyword args:
                 list -- Defines which tags of the search results should be listed in the response.
@@ -428,13 +447,11 @@ class Connection(object):
         return ListLastRequest(self, *args, **kwargs).send()
 
     def retrieve_last(self, *args, **kwargs):
-        """ Returns documents that are most recently added to the Storage.
+        """ Return compleate documents that are most recently added to the Storage.
 
         Keyword args:
                 docs -- Number of documents to be returned. Default is 10.
                 offset -- Offset from the beginning of the result set. Default is 0.
-                list -- Defines which tags of the search results should be listed in the response.
-                        A dict with tag xpaths as keys and listing option strings ('yes', 'no', 'snippet', 'highlight') as values.
                 See Request.__init__()
 
         Returns:
@@ -443,13 +460,11 @@ class Connection(object):
         return RetrieveLastRequest(self, *args, **kwargs).send()
 
     def retrieve_first(self, *args, **kwargs):
-        """ Returns documents th at are added to the Storeage the longest time ago.
+        """ Return compleate documents that are added to the Storeage the longest time ago.
 
         Keyword args:
                 docs -- Number of documents to be returned. Default is 10.
                 offset -- Offset from the beginning of the result set. Default is 0.
-                list -- Defines which tags of the search results should be listed in the response.
-                        A dict with tag xpaths as keys and listing option strings ('yes', 'no', 'snippet', 'highlight') as values.
                 See Request.__init__()
 
         Returns:

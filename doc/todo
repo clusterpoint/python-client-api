@@ -10,36 +10,32 @@ mēra sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt
 NEPILNĪBAS:
 Neatbalsta dict formāta dokumentos,ka tagā ir bērna tagi un brīvs teksts (teksts tikai viens pats tagā) un atribūtus.
 
-BUGS:
-Tikai vienu facet var padot! Katri citai vajaga savus tagus (nested_cont?).
-
 
 
 uztaisīt kārtīgu dokumentāciju as Sphinx
     tam vajdzēs visur kārtīgus komentārus lai var autoģenerēt
     tutoriāli,referencei (špikot no py-mongo vienā vārdā)
+github salikt metadokuemnetus, readme un tml
 ielikt pip un sataisīt autoinstalēšānos.
 mazo nepilnību un trūkumu izlabošana
     pec todo
     neatbilstības php
-    pymango paraga
+    pymango paraga (pārsvarā package organizācijas ziņā)
     pyliny/pep8
 profilēšana un performances uzlabošana,kur var
 iespējama C extensions taisīšana
 Django (tornado uc) integrācijas jautājums, Tornado
 
 
+
+
 list un ordering, agregate un kas tur vel.
-query palīgfunckijas
-smukas konsistentas errors
 set parameter jebkādam custum parameteram.
 
 iziet cauri php meklēt neatbilstības
 
 autoģēnerēta reference
-tutoriālitis
-snipeti wiki katrai komandai
-
+wiki
 
 eskeipošana:
     "   &quot;
@@ -47,3 +43,10 @@ eskeipošana:
     <   &lt;
     >   &gt;
     &   &amp
+
+
+
+no converters term pāŗvietot uz moduli jauno, pietaisīt query term arī bez tiem preikāta rīkeim vēl
+rekvestos kveriji akceptē tikai stringus
+
+

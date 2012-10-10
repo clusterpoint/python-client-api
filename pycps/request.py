@@ -239,6 +239,10 @@ class Request(object):
         if value is not None:
             self._content['id'] = str(value)
 
+    def set_text(self, value):
+        if value is not None:
+            self._content['text'] = value
+
     def set_len(self, value):
         if value is not None:
             self._content['len'] = str(value)
@@ -307,9 +311,9 @@ class Request(object):
         xml_request = self.get_xml_request()
         Debug.warn('-' * 25)
         Debug.warn(self._command)
-        #Debug.dump("doc: \n", self._documents)
-        #Debug.dump("cont: \n", self._content)
-        #Debug.dump("nest cont \n", self._nested_content)
+        Debug.dump("doc: \n", self._documents)
+        Debug.dump("cont: \n", self._content)
+        Debug.dump("nest cont \n", self._nested_content)
         Debug.dump("Request: \n", xml_request)
         return response._handle_response(self.connection._send_request(xml_request),
                                          self._command, self.connection.document_id_xpath)
@@ -469,7 +473,7 @@ class SearchRequest(Request):
                 exact_match -- Exact match option strinig. Available are:
                         'text', 'binary', 'all', None. Default is None.
                 group -- Tag name of tag for which groups were created.
-                group_size -- Maximum number of documents returned from one group. Default id 0 )no grouping performed).
+                group_size -- Maximum number of documents returned from one group. Default id 0 (no grouping performed).
                 See Request.__init__().
         """
         Request.__init__(self, connection, 'search', **kwargs)
@@ -665,9 +669,6 @@ class RetrieveLastRequest(LastFirstRequest):
                 See Request.__init__().
 
             Keyword args:
-                list -- Defines which tags of the search results should be listed in the response.
-                        A dict with tag xpaths as keys and listing option strings ('yes', 'no',
-                        'snippet', 'highlight') as values.
                 docs -- Number of documents to be returned. Default is 10.
                 offset -- Offset from the beginning of the result set. Default is 0.
                 See Request.__init__()
@@ -684,9 +685,6 @@ class RetrieveFirstRequest(LastFirstRequest):
                 See Request.__init__().
 
             Keyword args:
-                list -- Defines which tags of the search results should be listed in the response.
-                        A dict with tag xpaths as keys and listing option strings ('yes', 'no',
-                        'snippet', 'highlight') as values.
                 docs -- Number of documents to be returned. Default is 10.
                 offset -- Offset from the beginning of the result set. Default is 0.
                 See Request.__init__()
@@ -696,25 +694,30 @@ class RetrieveFirstRequest(LastFirstRequest):
 
 
 class SimilarRequest(Request):
-    def __init__(self, connection, docid, len, quota, offset=0, docs=None, query=None, **kwargs):
+    def __init__(self, connection, source, len, quota, mode='id', offset=0, docs=None, query=None, **kwargs):
         """ Initize a SimilarRequest object with additional fields to the base Request class.
 
         Args:
-            docid -- ID of the source document - the one that You want to search similar documents to.
+            source -- A ID of the source document - the one that You want to search similar documents to
+                    OR a text (selected based on mode value)
             len -- Number of keywords to extract from the source.
             quota -- Minimum number of keywords matching in the destination.
-            offset -- Number of results to skip before returning the following ones.
             See Request.__init__().
 
         Keyword args:
+            mode -- If is 'id', source is interpreted as a document id, if is 'text', source is interpreted as text.
+            offset -- Number of results to skip before returning the following ones.
             docs -- Number of documents to retrieve. Default is 10.
             query -- An optional query that all found documents have to match against. See SearchRequest.
             See Request.__init__()
         """
         Request.__init__(self, connection, 'similar', **kwargs)
-        self.add_property(self.set_docid, 'docid', docid, 'id')
+        if mode == 'id':
+            self.add_property(self.set_docid, 'docid', source, 'id')
+        else:
+            self.add_property(self.set_text, 'text', source)
         self.add_property(self.set_len, 'len', len)
         self.add_property(self.set_quota, 'quota', quota)
         self.add_property(self.set_offset, 'offset', offset)
         self.add_property(self.set_docs, 'docs', docs)
-        self.add_property(self.set_query, 'query', query)   # TODO: add dict parametr form for query
+        self.add_property(self.set_query, 'query', query)

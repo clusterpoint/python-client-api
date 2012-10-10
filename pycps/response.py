@@ -36,7 +36,7 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'backup': Response,
         'restore': Response,
         'clear': Response,
-        'status': Response,
+        'status': StatusResponse,
         'search': SearchResponse,
         'retrieve': ListResponse,
         'similar': ListResponse,
@@ -49,8 +49,7 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'retrieve-first': ListResponse,
         'show-history': None,
         'list-paths': None,
-        'list-facets': None,
-        'similar-text': None}
+        'list-facets': None}
     try:
         request_class = _response_switch[command]
     except KeyError:
@@ -85,17 +84,17 @@ class Response(object):
         """
         Debug.dump('Raw response: \n', response)
         try:
-            self.response = ET.fromstring(response)
+            self._response = ET.fromstring(response)
         except ET.ParseError:
             raise ResponseError(response)
         if raise_errors:
             self._parse_for_errors()
-        self._content = self.response.find('{www.clusterpoint.com}content')
+        self._content = self._response.find('{www.clusterpoint.com}content')
         self._id_xpath = id_xpath.split('/')
 
     def _parse_for_errors(self):
         """ Look for an error tag and raise APIError for fatal errors or APIWarning for nonfatal ones. """
-        error = self.response.find('{www.clusterpoint.com}error')
+        error = self._response.find('{www.clusterpoint.com}error')
         if error:
             if error.find('level').text.lower() in ('rejected', 'failed', 'error', 'fatal'):
                 raise APIError(error)
@@ -135,15 +134,26 @@ class Response(object):
 
     @property
     def seconds(self):
-        return float(self.response.find('{www.clusterpoint.com}seconds').text)
+        return float(self._response.find('{www.clusterpoint.com}seconds').text)
 
     @property
     def storage_name(self):
-        return self.response.find('{www.clusterpoint.com}storage').text
+        return self._response.find('{www.clusterpoint.com}storage').text
 
     @property
     def command(self):
-        return self.response.find('{www.clusterpoint.com}command').text
+        return self._response.find('{www.clusterpoint.com}command').text
+
+
+class StatusResponse(Response):
+    """ StatusResponse object to a request to Clusterpoint Storage.
+
+        Properties:
+            status -- A dict where keys correspond to the Clusterpoint Storage status message structure.
+    """
+    def __init__(self, *args, **kwargs):
+        Response.__init__(self, *args, **kwargs)
+        self.status = self.get_content_dict()
 
 
 class ModifyResponse(Response):
