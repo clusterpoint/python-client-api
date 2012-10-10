@@ -29,6 +29,9 @@ Django (tornado uc) integrācijas jautājums, Tornado
 
 
 
+metožu izsaukumi paplidus apstrādā u natgriež no response objekta tikai relevantos datus (paths list, doc ids utt). Lai tiktu klāt visam, tasia objektu?
+
+
 list un ordering, agregate un kas tur vel.
 set parameter jebkādam custum parameteram.
 

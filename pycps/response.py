@@ -48,7 +48,7 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'retrieve-last': ListResponse,
         'retrieve-first': ListResponse,
         'show-history': None,
-        'list-paths': None,
+        'list-paths': ListPathsResponse,
         'list-facets': None}
     try:
         request_class = _response_switch[command]
@@ -121,7 +121,7 @@ class Response(object):
                 name -- A name string of the content's subtag to be returned.
 
             Returns:
-                A dict representing the contents of the specified field or a list or a list of dicts
+                A dict representing the contents of the specified field or a list of dicts
                 if there are multiple fields with that tag name. Returns None if no field found.
         """
         fields = self._content.findall(name)
@@ -180,6 +180,17 @@ class SearchDeleteResponse(Response):
     def hits(self):
         return int(self.get_content_field('hits'))
 
+
+class ListPathsResponse(Response):
+    """ ListPathsResponse object to a request to Clusterpoint Storage. """
+    def get_paths(self):
+        """ Get the list of existing xpaths in the Storage.
+
+            Returns:
+                A list with the returned xpath strings.
+        """
+        return [path.text for path in self._content.find('paths').findall('path')]
+    
 
 class ListResponse(Response):
     """ ListResponse object to a request to Clusterpoint Storage.

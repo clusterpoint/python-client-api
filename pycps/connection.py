@@ -471,3 +471,15 @@ class Connection(object):
             A ListResponse object.
         """
         return RetrieveFirstRequest(self, *args, **kwargs).send()
+
+
+    def list_paths(self, **kwargs):
+        """ Get a list of all xpaths that are available to the storage.
+
+        Keyword args:
+            See Request.__init__().
+
+        Returns:
+            A ListPathsResponse object.
+        """
+        return Request(self, 'list-paths', **kwargs).send()
