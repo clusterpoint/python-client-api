@@ -49,7 +49,7 @@ def _handle_response(response, command, id_xpath='./id', **kwargs):
         'retrieve-first': ListResponse,
         'show-history': None,
         'list-paths': ListPathsResponse,
-        'list-facets': None}
+        'list-facets': ListFacetsResponse}
     try:
         request_class = _response_switch[command]
     except KeyError:
@@ -335,3 +335,16 @@ class AlternativesResponse(Response):
                                       for word in alternatives.findall('word')])})
                      for alternatives in
                      self._content.find('alternatives_list').findall('alternatives')])
+
+
+class ListFacetsResponse(Response):
+    """ ListFacetsResponse object to a request to Clusterpoint Storage. """
+    def get_facets(self):
+        """ Get facets from the response.
+
+            Returns:
+                A dict where requested facet paths are keys and a list of coresponding terms are values.
+        """
+        return dict([(facet.attrib['path'], [term.text
+                                             for term in facet.findall('term')])
+                     for facet in self._content.findall('facet')])

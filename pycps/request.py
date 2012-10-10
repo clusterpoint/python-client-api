@@ -251,6 +251,10 @@ class Request(object):
         if value is not None:
             self._content['quota'] = str(value)
 
+    def set_path(self, value):
+        if value is not None:
+            self._content['path'] = value
+
     def get_xml_request(self):
         """ Make xml request string from stored request information.
 
@@ -721,3 +725,18 @@ class SimilarRequest(Request):
         self.add_property(self.set_offset, 'offset', offset)
         self.add_property(self.set_docs, 'docs', docs)
         self.add_property(self.set_query, 'query', query)
+
+
+class ListFacetsRequest(Request):
+    def __init__(self, connection, paths, **kwargs):
+        """ Initize a ListFacetsRequest object with additional fields to the base Request class.
+
+        Args:
+            paths -- A single facet path string or a list of them.
+            See Request.__init__().
+
+        Keyword args:
+            See Request.__init__()
+        """
+        Request.__init__(self, connection, 'list-facets', **kwargs)
+        self.add_property(self.set_path, 'paths', paths, 'path')

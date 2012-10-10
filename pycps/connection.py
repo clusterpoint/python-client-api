@@ -483,3 +483,18 @@ class Connection(object):
             A ListPathsResponse object.
         """
         return Request(self, 'list-paths', **kwargs).send()
+
+
+    def list_facets(self, *args, **kwargs):
+        """ Get a list of all terms that the storage has seen for a particular facet (or multiple facets).
+
+            Args:
+                paths -- A single facet path string or a list of them.
+
+        Keyword args:
+            See Request.__init__().
+
+        Returns:
+            A ListFacetsResponse object.
+        """
+        return ListFacetsRequest(self, *args, **kwargs).send()
