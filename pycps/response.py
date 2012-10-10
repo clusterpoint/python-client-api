@@ -190,7 +190,7 @@ class ListPathsResponse(Response):
                 A list with the returned xpath strings.
         """
         return [path.text for path in self._content.find('paths').findall('path')]
-    
+
 
 class ListResponse(Response):
     """ ListResponse object to a request to Clusterpoint Storage.
