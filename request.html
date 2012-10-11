@@ -61,7 +61,6 @@
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">Request</tt><big>(</big><em>connection</em>, <em>command</em>, <em>request_id=None</em>, <em>timeout=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#request.Request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
 <p>Handles requests to the Storage.</p>
-<p>Initialize a Request object with given parameters.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>connection &#8211; A Connection object to be used for this request.
@@ -267,7 +266,6 @@ wraped in connections envelope.</dd>
 <dt id="request.BackupRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">BackupRequest</tt><big>(</big><em>connection</em>, <em>backup_file</em>, <em>backup_type=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.BackupRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a BackupRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -286,7 +284,6 @@ See Request.__init__().</dd>
 <dt id="request.RestoreRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RestoreRequest</tt><big>(</big><em>connection</em>, <em>backup_file</em>, <em>sequence_check=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RestoreRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a RestoreRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -310,7 +307,6 @@ See Request.__init__().</dd>
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ModifyRequest</tt><big>(</big><em>connection</em>, <em>documents</em>, <em>add_ids=True</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ModifyRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
 <p>Base request for insert, update, replace and partial_replace command requests.</p>
-<p>Initize a DocumentoRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -334,7 +330,6 @@ use add_ids=False and pass list of documents or single document instead of the d
 <dt id="request.InsertRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">InsertRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.InsertRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
-<p>Initize a InsertsRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -353,7 +348,6 @@ use add_ids=False and pass list of documents or single document instead of the d
 <dt id="request.UpdateRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">UpdateRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.UpdateRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
-<p>Initize a UpdateRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -372,7 +366,6 @@ use add_ids=False and pass list of documents or single document instead of the d
 <dt id="request.ReplaceRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ReplaceRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ReplaceRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
-<p>Initize a ReplaceRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -391,7 +384,6 @@ use add_ids=False and pass list of documents or single document instead of the d
 <dt id="request.PartialReplaceRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">PartialReplaceRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.PartialReplaceRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
-<p>Initize a PartialReplaceRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -410,7 +402,6 @@ use add_ids=False and pass list of documents or single document instead of the d
 <dt id="request.SearchRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SearchRequest</tt><big>(</big><em>connection</em>, <em>query</em>, <em>docs=None</em>, <em>offset=None</em>, <em>list=None</em>, <em>ordering=None</em>, <em>agregate=None</em>, <em>facet=None</em>, <em>facet_size=None</em>, <em>stem_lang=None</em>, <em>exact_match=None</em>, <em>group=None</em>, <em>group_size=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SearchRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a SearchRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -451,7 +442,6 @@ See Request.__init__().</p>
 <dt id="request.ListWordsRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListWordsRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListWordsRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.SearchRequest" title="request.SearchRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.SearchRequest</span></tt></a></p>
-<p>Initize a ListWordsRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -471,7 +461,6 @@ query texts or nested dicts.
 <dt id="request.SearchDeleteRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SearchDeleteRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SearchDeleteRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.SearchRequest" title="request.SearchRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.SearchRequest</span></tt></a></p>
-<p>Initize a SearchDeleteRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See SearchRequest
@@ -485,7 +474,6 @@ See Request.__init__().</dd>
 <dt id="request.LookupRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">LookupRequest</tt><big>(</big><em>connection</em>, <em>doc_ids</em>, <em>list=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.LookupRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a LookupRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>doc_ids &#8211; Single document id or a list of them.
@@ -504,7 +492,6 @@ See Request.__init__()</dd>
 <dt id="request.RetrieveRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveRequest</tt><big>(</big><em>connection</em>, <em>doc_ids</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a RetrieveRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>doc_ids &#8211; Single document id or a list of them.
@@ -518,7 +505,6 @@ See Request.__init__().</dd>
 <dt id="request.DeleteRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">DeleteRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.DeleteRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.RetrieveRequest" title="request.RetrieveRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.RetrieveRequest</span></tt></a></p>
-<p>Initize a DeleteRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>doc_ids &#8211; Single document id or a list of them.
@@ -532,7 +518,6 @@ See Request.__init__()</dd>
 <dt id="request.AlternativesRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">AlternativesRequest</tt><big>(</big><em>connection</em>, <em>query</em>, <em>cr=None</em>, <em>idif=None</em>, <em>h=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.AlternativesRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a AlternativesRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -564,7 +549,6 @@ If this parameter is increased, less results are returned while performance is i
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">LastFirstRequest</tt><big>(</big><em>connection</em>, <em>list=None</em>, <em>docs=None</em>, <em>offset=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.LastFirstRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
 <p>Base class for first/last retrieve/list commands.</p>
-<p>Initize a LastFirst Request object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See Request.__init__().</dd>
@@ -585,7 +569,6 @@ See Request.__init__()</p>
 <dt id="request.ListLastRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListLastRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListLastRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
-<p>Initize a ListLastRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See Request.__init__().</dd>
@@ -606,7 +589,6 @@ See Request.__init__()</p>
 <dt id="request.ListFirstRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListFirstRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListFirstRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
-<p>Initize a ListFirstRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See Request.__init__().</dd>
@@ -627,7 +609,6 @@ See Request.__init__()</p>
 <dt id="request.RetrieveLastRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveLastRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveLastRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
-<p>Initize a RetrieveLastRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See Request.__init__().</dd>
@@ -642,7 +623,6 @@ See Request.__init__()</dd>
 <dt id="request.RetrieveFirstRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveFirstRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveFirstRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
-<p>Initize a RetrieveFirstRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>See Request.__init__().</dd>
@@ -657,7 +637,6 @@ See Request.__init__()</dd>
 <dt id="request.SimilarRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SimilarRequest</tt><big>(</big><em>connection</em>, <em>source</em>, <em>len</em>, <em>quota</em>, <em>mode='id'</em>, <em>offset=0</em>, <em>docs=None</em>, <em>query=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SimilarRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a SimilarRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd><dl class="first docutils">
@@ -681,7 +660,6 @@ See Request.__init__()</dd>
 <dt id="request.ListFacetsRequest">
 <em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListFacetsRequest</tt><big>(</big><em>connection</em>, <em>paths</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListFacetsRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
-<p>Initize a ListFacetsRequest object with additional fields to the base Request class.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>paths &#8211; A single facet path string or a list of them.

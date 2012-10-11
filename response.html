@@ -66,9 +66,6 @@
 <dd>seconds &#8211; A float of seconds it took the Clusterpoint Storage to prepare this response.
 storage_name &#8211; The name of Clusterpoint Storage this response was recieved from.
 command &#8211; The command to what this response is made.</dd>
-</dl>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
-<dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
 <dt>Keyword args:</dt>
@@ -151,9 +148,6 @@ if there are multiple fields with that tag name. Returns None if no field found.
 <dl class="docutils">
 <dt>Properties:</dt>
 <dd>modified_ids &#8211; A list of ids of documents modified for this response.</dd>
-</dl>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
-<dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
 <dt>Keyword args:</dt>
@@ -184,9 +178,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <dl class="docutils">
 <dt>Properties:</dt>
 <dd>hits &#8211; The number of deleted documents.</dd>
-</dl>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
-<dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
 <dt>Keyword args:</dt>
@@ -214,7 +205,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ListPathsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ListPathsResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
 <p>ListPathsResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
@@ -255,9 +245,6 @@ from_document &#8211; The offset from the begining of the result set.
 to_document &#8211; Offeset pluss document count.
 more &#8211; Number of documents matching but not returned.
 hits &#8211; The number of documents matching the query.</dd>
-</dl>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
-<dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
 <dt>Keyword args:</dt>
@@ -329,7 +316,6 @@ A raw XML document string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">LookupResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.LookupResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.ListResponse" title="response.ListResponse"><tt class="xref py py-class docutils literal"><span class="pre">response.ListResponse</span></tt></a></p>
 <p>LookupResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
@@ -353,7 +339,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">SearchResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.SearchResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.ListResponse" title="response.ListResponse"><tt class="xref py py-class docutils literal"><span class="pre">response.ListResponse</span></tt></a></p>
 <p>SearchResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
@@ -406,7 +391,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">WordsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.WordsResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
 <p>WordResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
@@ -449,7 +433,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">AlternativesResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.AlternativesResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
 <p>AlternativesResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>
@@ -500,7 +483,6 @@ ResponseError &#8211; Recieved invalid response string.</dd>
 <em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ListFacetsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ListFacetsResponse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
 <p>ListFacetsResponse object to a request to Clusterpoint Storage.</p>
-<p>Parse the response string to an etree object and optionaly check for API errors.</p>
 <dl class="docutils">
 <dt>Args:</dt>
 <dd>response &#8211; A raw XML response block with envelope and all.</dd>

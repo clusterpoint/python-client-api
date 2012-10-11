@@ -6,9 +6,6 @@
 Pycps |release| documentation
 =================================
 
-.. automodule:: pycps
-   :synopsis: Python API for Clusterpoint Storage
-
 Installation:
 ============
 Get the source from the `github repo <https://github.com/silins/pycps>`_.
@@ -25,7 +22,6 @@ Reference:
    query
    utils
    errors
-
 
 Indices and tables
 ==================
