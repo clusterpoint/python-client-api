@@ -26,8 +26,7 @@ from  response import _handle_response
 class Request(object):
     """ Handles requests to the Storage."""
     def __init__(self, connection, command, request_id=None, timeout=None, type=None):
-        """ Initialize a Request object with given parameters.
-
+        """
             Args:
                 connection -- A Connection object to be used for this request.
                 command -- The command string for this request.
@@ -325,8 +324,7 @@ class Request(object):
 
 class BackupRequest(Request):
     def __init__(self, connection, backup_file, backup_type=None, **kwargs):
-        """ Initize a BackupRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 backup_file --  String with full path of the backup archive to be created.
                                 File name must end with '.tar.gz'.
@@ -343,8 +341,7 @@ class BackupRequest(Request):
 
 class RestoreRequest(Request):
     def __init__(self, connection, backup_file, sequence_check=None, **kwargs):
-        """ Initize a RestoreRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 backup_file --  String with full path of the backup archive to be created.
                                 File name must end with '.tar.gz'.
@@ -363,8 +360,7 @@ class RestoreRequest(Request):
 class ModifyRequest(Request):
     """ Base request for insert, update, replace and partial_replace command requests."""
     def __init__(self, connection, documents, add_ids=True, **kwargs):
-        """ Initize a DocumentoRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
                             representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
@@ -383,8 +379,7 @@ class ModifyRequest(Request):
 
 class InsertRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a InsertsRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
                             representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
@@ -400,8 +395,7 @@ class InsertRequest(ModifyRequest):
 
 class UpdateRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a UpdateRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
                             representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
@@ -417,8 +411,7 @@ class UpdateRequest(ModifyRequest):
 
 class ReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a ReplaceRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
                             representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
@@ -434,8 +427,7 @@ class ReplaceRequest(ModifyRequest):
 
 class PartialReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a PartialReplaceRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
                             representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
@@ -452,8 +444,7 @@ class PartialReplaceRequest(ModifyRequest):
 class SearchRequest(Request):
     def __init__(self, connection, query, docs=None, offset=None, list=None, ordering=None, agregate=None,
                  facet=None, facet_size=None, stem_lang=None, exact_match=None, group=None, group_size=None, **kwargs):
-        """ Initize a SearchRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 query -- A query string where all <, > and & characters that aren't supposed to be XML
                         tags, should be escaped or a dict where keys are query xpaths and values ether
@@ -497,8 +488,7 @@ class SearchRequest(Request):
 
 class ListWordsRequest(SearchRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a ListWordsRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 query -- A query string where all <, > and & characters that aren't supposed to be XML
                         tags, should be escaped or a dict where keys are query xpaths and values ether
@@ -515,8 +505,7 @@ class ListWordsRequest(SearchRequest):
 
 class SearchDeleteRequest(SearchRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a SearchDeleteRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 See SearchRequest
                 See Request.__init__().
@@ -530,8 +519,7 @@ class SearchDeleteRequest(SearchRequest):
 
 class LookupRequest(Request):
     def __init__(self, connection, doc_ids, list=None, **kwargs):
-        """ Initize a LookupRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 doc_ids -- Single document id or a list of them.
                 See Request.__init__()
@@ -548,8 +536,7 @@ class LookupRequest(Request):
 
 class RetrieveRequest(Request):
     def __init__(self, connection, doc_ids, **kwargs):
-        """ Initize a RetrieveRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 doc_ids -- Single document id or a list of them.
                 See Request.__init__().
@@ -563,8 +550,7 @@ class RetrieveRequest(Request):
 
 class DeleteRequest(RetrieveRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a DeleteRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 doc_ids -- Single document id or a list of them.
                 See Request.__init__()
@@ -578,8 +564,7 @@ class DeleteRequest(RetrieveRequest):
 
 class AlternativesRequest(Request):
     def __init__(self, connection, query, cr=None, idif=None, h=None, **kwargs):
-        """ Initize a AlternativesRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 query -- A query string where all <, > and & characters that aren't supposed to be XML
                         tags, should be escaped or a dict where keys are query xpaths and values ether
@@ -608,8 +593,7 @@ class AlternativesRequest(Request):
 class LastFirstRequest(Request):
     """ Base class for first/last retrieve/list commands."""
     def __init__(self, connection, list=None, docs=None, offset=None, **kwargs):
-        """ Initize a LastFirst Request object with additional fields to the base Request class.
-
+        """
             Args:
                 See Request.__init__().
 
@@ -629,8 +613,7 @@ class LastFirstRequest(Request):
 
 class ListLastRequest(LastFirstRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a ListLastRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 See Request.__init__().
 
@@ -648,8 +631,7 @@ class ListLastRequest(LastFirstRequest):
 
 class ListFirstRequest(LastFirstRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a ListFirstRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 See Request.__init__().
 
@@ -667,8 +649,7 @@ class ListFirstRequest(LastFirstRequest):
 
 class RetrieveLastRequest(LastFirstRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a RetrieveLastRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 See Request.__init__().
 
@@ -683,8 +664,7 @@ class RetrieveLastRequest(LastFirstRequest):
 
 class RetrieveFirstRequest(LastFirstRequest):
     def __init__(self, *args, **kwargs):
-        """ Initize a RetrieveFirstRequest object with additional fields to the base Request class.
-
+        """
             Args:
                 See Request.__init__().
 
@@ -699,8 +679,7 @@ class RetrieveFirstRequest(LastFirstRequest):
 
 class SimilarRequest(Request):
     def __init__(self, connection, source, len, quota, mode='id', offset=0, docs=None, query=None, **kwargs):
-        """ Initize a SimilarRequest object with additional fields to the base Request class.
-
+        """
         Args:
             source -- A ID of the source document - the one that You want to search similar documents to
                     OR a text (selected based on mode value)
@@ -729,8 +708,7 @@ class SimilarRequest(Request):
 
 class ListFacetsRequest(Request):
     def __init__(self, connection, paths, **kwargs):
-        """ Initize a ListFacetsRequest object with additional fields to the base Request class.
-
+        """
         Args:
             paths -- A single facet path string or a list of them.
             See Request.__init__().

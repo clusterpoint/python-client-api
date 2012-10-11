@@ -31,8 +31,7 @@ class Connection(object):
     def __init__(self, host, port, storage, user, password,
                  document_root_xpath='document', document_id_xpath='./id',
                  selector_url='/cgi-bin/cps2-cgi', application='PYCPS',  reply_charset=None):
-        """ Create a new connection to CPS.
-
+        """
             Args:
                 host -- A host address string.
                 port -- A host port number.
@@ -124,7 +123,7 @@ class Connection(object):
             Keyword args:
                 add_ids -- If True argument must be dict with document ids as keys, that will be inserted in documents.
                             Default is True.
-                See Request.__init__().
+                See :class:`Request`
 
         Returns:
             A ModifyResponse object.

@@ -66,8 +66,7 @@ class Response(object):
             command -- The command to what this response is made.
     """
     def __init__(self, response, id_xpath='./id', raise_errors=True):
-        """ Parse the response string to an etree object and optionaly check for API errors.
-
+        """
             Args:
                 response -- A raw XML response block with envelope and all.
 
