@@ -1,0 +1,753 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>request Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="response Module" href="response.html" />
+    <link rel="prev" title="converters Module" href="converters.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="response Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="converters.html" title="converters Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-request">
+<span id="request-module"></span><h1>request Module<a class="headerlink" href="#module-request" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="request.Request">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">Request</tt><big>(</big><em>connection</em>, <em>command</em>, <em>request_id=None</em>, <em>timeout=None</em>, <em>type=None</em><big>)</big><a class="headerlink" href="#request.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Handles requests to the Storage.</p>
+<p>Initialize a Request object with given parameters.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>connection &#8211; A Connection object to be used for this request.
+command &#8211; The command string for this request.</dd>
+<dt>Keyword args:</dt>
+<dd>timeout &#8211; 
+type &#8211; Type of request processing. Can be &#8216;auto&#8217;, &#8216;single&#8217;, &#8216;cluster&#8217;. Default is &#8216;auto&#8217;.
+request_id &#8211; Optional request id identificator.</dd>
+</dl>
+<dl class="method">
+<dt id="request.Request.set_documents">
+<tt class="descname">set_documents</tt><big>(</big><em>documents</em>, <em>add_ids=True</em><big>)</big><a class="headerlink" href="#request.Request.set_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap documents in the correct root tags, add id fields and convert them to xml strings.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>add_ids &#8211; If True argument must be dict with document ids as keys, that will be inserted in documents.</dt>
+<dd>Default is True.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_doc_ids">
+<tt class="descname">set_doc_ids</tt><big>(</big><em>doc_ids</em><big>)</big><a class="headerlink" href="#request.Request.set_doc_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build xml documents from a list of document ids.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; A document id or a lost of those.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.Request.add_property">
+<tt class="descname">add_property</tt><big>(</big><em>set_property</em>, <em>name</em>, <em>starting_value</em>, <em>tag_name=None</em><big>)</big><a class="headerlink" href="#request.Request.add_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set properies of atributes stored in content using stored common fdel and fget and given fset.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>set_property &#8211; Function that sets given property.
+name &#8211; Name of the atribute this property must simulate. Used as key in content dict by default.
+starting_value &#8211; Starting value of given property.</dd>
+<dt>Keyword args:</dt>
+<dd>tag_name &#8211; The tag name stored in conted dict as a key if different to name.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_backup_file">
+<tt class="descname">set_backup_file</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_backup_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_backup_type">
+<tt class="descname">set_backup_type</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_backup_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_sequence_check">
+<tt class="descname">set_sequence_check</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_sequence_check" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_query">
+<tt class="descname">set_query</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a dict form of query in a string of needed and store the query string.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>value &#8211; A query string or a dict with query xpaths as keys and text or</dt>
+<dd>nested query dicts as values.</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_docs">
+<tt class="descname">set_docs</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_docs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_offset">
+<tt class="descname">set_offset</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_list">
+<tt class="descname">set_list</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_ordering">
+<tt class="descname">set_ordering</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_ordering" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_agregate">
+<tt class="descname">set_agregate</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_agregate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_facet">
+<tt class="descname">set_facet</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_facet" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_facet_size">
+<tt class="descname">set_facet_size</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_facet_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_stem_lang">
+<tt class="descname">set_stem_lang</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_stem_lang" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_exact_match">
+<tt class="descname">set_exact_match</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_exact_match" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_group">
+<tt class="descname">set_group</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_group" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_group_size">
+<tt class="descname">set_group_size</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_group_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_cr">
+<tt class="descname">set_cr</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_cr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_idif">
+<tt class="descname">set_idif</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_idif" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_h">
+<tt class="descname">set_h</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_h" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_docid">
+<tt class="descname">set_docid</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_docid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_text">
+<tt class="descname">set_text</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_len">
+<tt class="descname">set_len</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_len" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_quota">
+<tt class="descname">set_quota</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_quota" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.set_path">
+<tt class="descname">set_path</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#request.Request.set_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="request.Request.get_xml_request">
+<tt class="descname">get_xml_request</tt><big>(</big><big>)</big><a class="headerlink" href="#request.Request.get_xml_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make xml request string from stored request information.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A properly formated XMl request string containing all set request fields and
+wraped in connections envelope.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="request.Request.send">
+<tt class="descname">send</tt><big>(</big><big>)</big><a class="headerlink" href="#request.Request.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send an XML string version of content through the connection.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>Response object.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="request.BackupRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">BackupRequest</tt><big>(</big><em>connection</em>, <em>backup_file</em>, <em>backup_type=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.BackupRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a BackupRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>backup_file &#8211;  String with full path of the backup archive to be created.</dt>
+<dd>File name must end with &#8216;.tar.gz&#8217;.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>backup_type &#8211;  Backup type string, can be ether &#8216;full&#8217; or &#8216;incremental&#8217;. Default is &#8216;incremental&#8217; if posible.
+See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.RestoreRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RestoreRequest</tt><big>(</big><em>connection</em>, <em>backup_file</em>, <em>sequence_check=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RestoreRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a RestoreRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>backup_file &#8211;  String with full path of the backup archive to be created.</dt>
+<dd>File name must end with &#8216;.tar.gz&#8217;.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>sequence_check &#8211;  Ccheck for valid incremental backup sequence if True.</dt>
+<dd>Default is True.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ModifyRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ModifyRequest</tt><big>(</big><em>connection</em>, <em>documents</em>, <em>add_ids=True</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ModifyRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Base request for insert, update, replace and partial_replace command requests.</p>
+<p>Initize a DocumentoRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+<p class="last">See Request.__init__()</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>add_ids &#8211; If True argument must be dict with document ids as keys, that will be inserted in documents.</dt>
+<dd>Default is True.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.InsertRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">InsertRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.InsertRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
+<p>Initize a InsertsRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.UpdateRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">UpdateRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.UpdateRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
+<p>Initize a UpdateRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ReplaceRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ReplaceRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ReplaceRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
+<p>Initize a ReplaceRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.PartialReplaceRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">PartialReplaceRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.PartialReplaceRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.ModifyRequest" title="request.ModifyRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.ModifyRequest</span></tt></a></p>
+<p>Initize a PartialReplaceRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.SearchRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SearchRequest</tt><big>(</big><em>connection</em>, <em>query</em>, <em>docs=None</em>, <em>offset=None</em>, <em>list=None</em>, <em>ordering=None</em>, <em>agregate=None</em>, <em>facet=None</em>, <em>facet_size=None</em>, <em>stem_lang=None</em>, <em>exact_match=None</em>, <em>group=None</em>, <em>group_size=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SearchRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a SearchRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd><p class="first">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+list &#8211; Defines which tags of the search results should be listed in the response.</p>
+<blockquote>
+<div>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</div></blockquote>
+<p>facet &#8211; A string of paths for facets or a list of those.
+facet_size &#8211; Maximum number of returned facet value count. Default is 0 - returns all values .
+ordering &#8211;  Defines the order in which results should be returned. Either a string or a list of those. See helper functions for building these.
+agregate &#8211; Defines aggregation queries for the search request.</p>
+<blockquote>
+<div>Ether a single aggregation query string, or a list of strings.</div></blockquote>
+<dl class="docutils">
+<dt>stem_lang &#8211; Stemming language idetificator string. Available are:</dt>
+<dd>&#8216;lv&#8217;, &#8216;en&#8217;, &#8216;ru&#8217;, &#8216;fr&#8217;, &#8216;es&#8217;, &#8216;pt&#8217;, &#8216;it&#8217;, &#8216;ro&#8217;, &#8216;de&#8217;, &#8216;nl&#8217;,
+&#8216;sv&#8217;, &#8216;no&#8217;, &#8216;da&#8217;, &#8216;fi&#8217;, &#8216;hu&#8217;, &#8216;tr&#8217;. Defalt is None.</dd>
+<dt>exact_match &#8211; Exact match option strinig. Available are:</dt>
+<dd>&#8216;text&#8217;, &#8216;binary&#8217;, &#8216;all&#8217;, None. Default is None.</dd>
+</dl>
+<p class="last">group &#8211; Tag name of tag for which groups were created.
+group_size &#8211; Maximum number of documents returned from one group. Default id 0 (no grouping performed).
+See Request.__init__().</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ListWordsRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListWordsRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListWordsRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.SearchRequest" title="request.SearchRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.SearchRequest</span></tt></a></p>
+<p>Initize a ListWordsRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.SearchDeleteRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SearchDeleteRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SearchDeleteRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.SearchRequest" title="request.SearchRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.SearchRequest</span></tt></a></p>
+<p>Initize a SearchDeleteRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See SearchRequest
+See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.LookupRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">LookupRequest</tt><big>(</big><em>connection</em>, <em>doc_ids</em>, <em>list=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.LookupRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a LookupRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them.
+See Request.__init__()</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">See Request.__init__()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.RetrieveRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveRequest</tt><big>(</big><em>connection</em>, <em>doc_ids</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a RetrieveRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them.
+See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.DeleteRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">DeleteRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.DeleteRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.RetrieveRequest" title="request.RetrieveRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.RetrieveRequest</span></tt></a></p>
+<p>Initize a DeleteRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them.
+See Request.__init__()</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.AlternativesRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">AlternativesRequest</tt><big>(</big><em>connection</em>, <em>query</em>, <em>cr=None</em>, <em>idif=None</em>, <em>h=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.AlternativesRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a AlternativesRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>cr &#8211; Minimum ratio between the occurrence of the alternative and the occurrence of the search term.</dt>
+<dd>If this parameter is increased, less results are returned while performance is improved. Default is 2.0.</dd>
+<dt>idif &#8211; A number that limits how much the alternative may differ from the search term,</dt>
+<dd>the greater the idif value, the greater the allowed difference.
+If this parameter is increased, more results are returned while performance is decreased. Default is 3.0.</dd>
+<dt>h &#8211;  A number that limits the overall estimate of the quality of the alternative,</dt>
+<dd>the greater the cr value and the smaller the idif value, the greater the h value.
+If this parameter is increased, less results are returned while performance is improved. Default is 2.5.</dd>
+</dl>
+<p class="last">See Request.__init__()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.LastFirstRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">LastFirstRequest</tt><big>(</big><em>connection</em>, <em>list=None</em>, <em>docs=None</em>, <em>offset=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.LastFirstRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Base class for first/last retrieve/list commands.</p>
+<p>Initize a LastFirst Request object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;,
+&#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ListLastRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListLastRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListLastRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
+<p>Initize a ListLastRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;,
+&#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ListFirstRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListFirstRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListFirstRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
+<p>Initize a ListFirstRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;,
+&#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.RetrieveLastRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveLastRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveLastRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
+<p>Initize a RetrieveLastRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd>docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.RetrieveFirstRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">RetrieveFirstRequest</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.RetrieveFirstRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.LastFirstRequest" title="request.LastFirstRequest"><tt class="xref py py-class docutils literal"><span class="pre">request.LastFirstRequest</span></tt></a></p>
+<p>Initize a RetrieveFirstRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd>docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.SimilarRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">SimilarRequest</tt><big>(</big><em>connection</em>, <em>source</em>, <em>len</em>, <em>quota</em>, <em>mode='id'</em>, <em>offset=0</em>, <em>docs=None</em>, <em>query=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.SimilarRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a SimilarRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first docutils">
+<dt>source &#8211; A ID of the source document - the one that You want to search similar documents to</dt>
+<dd>OR a text (selected based on mode value)</dd>
+</dl>
+<p class="last">len &#8211; Number of keywords to extract from the source.
+quota &#8211; Minimum number of keywords matching in the destination.
+See Request.__init__().</p>
+</dd>
+<dt>Keyword args:</dt>
+<dd>mode &#8211; If is &#8216;id&#8217;, source is interpreted as a document id, if is &#8216;text&#8217;, source is interpreted as text.
+offset &#8211; Number of results to skip before returning the following ones.
+docs &#8211; Number of documents to retrieve. Default is 10.
+query &#8211; An optional query that all found documents have to match against. See SearchRequest.
+See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="request.ListFacetsRequest">
+<em class="property">class </em><tt class="descclassname">request.</tt><tt class="descname">ListFacetsRequest</tt><big>(</big><em>connection</em>, <em>paths</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#request.ListFacetsRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#request.Request" title="request.Request"><tt class="xref py py-class docutils literal"><span class="pre">request.Request</span></tt></a></p>
+<p>Initize a ListFacetsRequest object with additional fields to the base Request class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>paths &#8211; A single facet path string or a list of them.
+See Request.__init__().</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__()</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="converters.html"
+                        title="previous chapter">converters Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="response.html"
+                        title="next chapter">response Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/request.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="response Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="converters.html" title="converters Module"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

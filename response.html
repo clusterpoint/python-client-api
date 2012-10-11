@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>response Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="query Module" href="query.html" />
+    <link rel="prev" title="request Module" href="request.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="query.html" title="query Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="request.html" title="request Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-response">
+<span id="response-module"></span><h1>response Module<a class="headerlink" href="#module-response" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="response.Response">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">Response</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Response object to a request to Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Properties:</dt>
+<dd>seconds &#8211; A float of seconds it took the Clusterpoint Storage to prepare this response.
+storage_name &#8211; The name of Clusterpoint Storage this response was recieved from.
+command &#8211; The command to what this response is made.</dd>
+</dl>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.Response.get_content_dict">
+<tt class="descname">get_content_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#response.Response.get_content_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Clusterpoint response&#8217;s content as a dict. See etree_to_dict().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="response.Response.get_content_etree">
+<tt class="descname">get_content_etree</tt><big>(</big><big>)</big><a class="headerlink" href="#response.Response.get_content_etree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Clusterpoint response&#8217;s content as an etree.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="response.Response.get_content_string">
+<tt class="descname">get_content_string</tt><big>(</big><big>)</big><a class="headerlink" href="#response.Response.get_content_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ge thet Clusterpoint response&#8217;s content as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="response.Response.get_content_field">
+<tt class="descname">get_content_field</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#response.Response.get_content_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the contents of a specific subtag from Clusterpoint Storage&#8217;s response&#8217;s content tag.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>name &#8211; A name string of the content&#8217;s subtag to be returned.</dd>
+<dt>Returns:</dt>
+<dd>A dict representing the contents of the specified field or a list of dicts
+if there are multiple fields with that tag name. Returns None if no field found.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="response.Response.seconds">
+<tt class="descname">seconds</tt><a class="headerlink" href="#response.Response.seconds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.Response.storage_name">
+<tt class="descname">storage_name</tt><a class="headerlink" href="#response.Response.storage_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.Response.command">
+<tt class="descname">command</tt><a class="headerlink" href="#response.Response.command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.StatusResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">StatusResponse</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#response.StatusResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>StatusResponse object to a request to Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Properties:</dt>
+<dd>status &#8211; A dict where keys correspond to the Clusterpoint Storage status message structure.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="response.ModifyResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ModifyResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ModifyResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>ModifyResponse object to a request to Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Properties:</dt>
+<dd>modified_ids &#8211; A list of ids of documents modified for this response.</dd>
+</dl>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="attribute">
+<dt id="response.ModifyResponse.modified_ids">
+<tt class="descname">modified_ids</tt><a class="headerlink" href="#response.ModifyResponse.modified_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.SearchDeleteResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">SearchDeleteResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.SearchDeleteResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>SearchResponse object to a request to Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Properties:</dt>
+<dd>hits &#8211; The number of deleted documents.</dd>
+</dl>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="attribute">
+<dt id="response.SearchDeleteResponse.hits">
+<tt class="descname">hits</tt><a class="headerlink" href="#response.SearchDeleteResponse.hits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.ListPathsResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ListPathsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ListPathsResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>ListPathsResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.ListPathsResponse.get_paths">
+<tt class="descname">get_paths</tt><big>(</big><big>)</big><a class="headerlink" href="#response.ListPathsResponse.get_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of existing xpaths in the Storage.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A list with the returned xpath strings.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.ListResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ListResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ListResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>ListResponse object to a request to Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Properties:</dt>
+<dd>found &#8211; The number of documents returned.
+from_document &#8211; The offset from the begining of the result set.
+to_document &#8211; Offeset pluss document count.
+more &#8211; Number of documents matching but not returned.
+hits &#8211; The number of documents matching the query.</dd>
+</dl>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.ListResponse.get_documents">
+<tt class="descname">get_documents</tt><big>(</big><em>doc_format='dict'</em><big>)</big><a class="headerlink" href="#response.ListResponse.get_documents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the documents returned from Storege in this response.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>doc_format &#8211; Specifies the doc_format for the returned documents.</dt>
+<dd>Can be &#8216;dict&#8217;, &#8216;etree&#8217; or &#8216;string&#8217;. Default is &#8216;dict&#8217;.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>A dict where keys are document ids and values depending of the required doc_format:</dt>
+<dd>A dict representations of documents (see etree_to_dict());
+A etree Element representing the document;
+A raw XML document string.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>ParameterError &#8211; The doc_format value is not allowed.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="response.ListResponse.found">
+<tt class="descname">found</tt><a class="headerlink" href="#response.ListResponse.found" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.ListResponse.from_document">
+<tt class="descname">from_document</tt><a class="headerlink" href="#response.ListResponse.from_document" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.ListResponse.to_document">
+<tt class="descname">to_document</tt><a class="headerlink" href="#response.ListResponse.to_document" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.ListResponse.more">
+<tt class="descname">more</tt><a class="headerlink" href="#response.ListResponse.more" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="response.ListResponse.hits">
+<tt class="descname">hits</tt><a class="headerlink" href="#response.ListResponse.hits" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.LookupResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">LookupResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.LookupResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.ListResponse" title="response.ListResponse"><tt class="xref py py-class docutils literal"><span class="pre">response.ListResponse</span></tt></a></p>
+<p>LookupResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="response.SearchResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">SearchResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.SearchResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.ListResponse" title="response.ListResponse"><tt class="xref py py-class docutils literal"><span class="pre">response.ListResponse</span></tt></a></p>
+<p>SearchResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.SearchResponse.get_facets">
+<tt class="descname">get_facets</tt><big>(</big><big>)</big><a class="headerlink" href="#response.SearchResponse.get_facets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get facets from the response.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>A dict in form:</dt>
+<dd><dl class="first docutils">
+<dt>{&lt;facet path&gt;: {&lt;term&gt;: &lt;number of hits for this term&gt;</dt>
+<dd>} // Repeated for every term.</dd>
+</dl>
+<p class="last">} // Repeated for every facet.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="response.SearchResponse.get_aggregate">
+<tt class="descname">get_aggregate</tt><big>(</big><big>)</big><a class="headerlink" href="#response.SearchResponse.get_aggregate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get aggregate data.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A dict in with queries as keys and results as values.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.WordsResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">WordsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.WordsResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>WordResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.WordsResponse.get_words">
+<tt class="descname">get_words</tt><big>(</big><big>)</big><a class="headerlink" href="#response.WordsResponse.get_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get words matching the request search terms.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>A dict in form:</dt>
+<dd><dl class="first docutils">
+<dt>{&lt;search term&gt;: {&lt;matching word&gt;: &lt;number of times this word is found in the Storage&gt;</dt>
+<dd>} // Repeated for every matching word.</dd>
+</dl>
+<p class="last">} // Repeated for every search term.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.AlternativesResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">AlternativesResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.AlternativesResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>AlternativesResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.AlternativesResponse.get_alternatives">
+<tt class="descname">get_alternatives</tt><big>(</big><big>)</big><a class="headerlink" href="#response.AlternativesResponse.get_alternatives" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the spelling alternatives for search terms.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><p class="first">A dict in form:
+{&lt;search term&gt;: {&#8216;count&#8217;: &lt;number of times the searh term occurs in the Storage&gt;,</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt>&#8216;words&#8217;: {&lt;an alternative&gt;: {&#8216;count&#8217;: &lt;number of times the alternative occurs in the Storage&gt;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;cr&#8217;: &lt;cr value of the alternative&gt;,
+&#8216;idif&#8217;: &lt;idif value of the alternative&gt;,
+&#8216;h&#8217;: &lt;h value of the alternative&gt;}</div></blockquote>
+<p class="last">} // Repeated for every alternative.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p class="last">} // Repeated for every search term</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="response.ListFacetsResponse">
+<em class="property">class </em><tt class="descclassname">response.</tt><tt class="descname">ListFacetsResponse</tt><big>(</big><em>response</em>, <em>id_xpath='./id'</em>, <em>raise_errors=True</em><big>)</big><a class="headerlink" href="#response.ListFacetsResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#response.Response" title="response.Response"><tt class="xref py py-class docutils literal"><span class="pre">response.Response</span></tt></a></p>
+<p>ListFacetsResponse object to a request to Clusterpoint Storage.</p>
+<p>Parse the response string to an etree object and optionaly check for API errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>response &#8211; A raw XML response block with envelope and all.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>raise_errors &#8211; If True, parse the response looking for errors defined in the API and</dt>
+<dd>rise them as exceptions. Default is True.</dd>
+<dt>id_xpath &#8211; The document id tag xpath relative to the document root used for id extracting.</dt>
+<dd>Default is &#8216;./id&#8217;.</dd>
+</dl>
+</dd>
+<dt>Raises:</dt>
+<dd>APIError &#8211; Recieved an error in the server response.
+APIWarning &#8211; Recieved an nonfatal error in the server response.
+ResponseError &#8211; Recieved invalid response string.</dd>
+</dl>
+<dl class="method">
+<dt id="response.ListFacetsResponse.get_facets">
+<tt class="descname">get_facets</tt><big>(</big><big>)</big><a class="headerlink" href="#response.ListFacetsResponse.get_facets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get facets from the response.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A dict where requested facet paths are keys and a list of coresponding terms are values.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="request.html"
+                        title="previous chapter">request Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="query.html"
+                        title="next chapter">query Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/response.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="query.html" title="query Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="request.html" title="request Module"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

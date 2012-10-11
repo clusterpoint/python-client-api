@@ -1,0 +1,194 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>utils Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="errors Module" href="errors.html" />
+    <link rel="prev" title="query Module" href="query.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="errors Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="query.html" title="query Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-utils">
+<span id="utils-module"></span><h1>utils Module<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="utils.Debug">
+<em class="property">class </em><tt class="descclassname">utils.</tt><tt class="descname">Debug</tt><a class="headerlink" href="#utils.Debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class for printing colored development debuging indormation.</p>
+<dl class="attribute">
+<dt id="utils.Debug.HEADER">
+<tt class="descname">HEADER</tt><em class="property"> = '\x1b[95m'</em><a class="headerlink" href="#utils.Debug.HEADER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.OKBLUE">
+<tt class="descname">OKBLUE</tt><em class="property"> = '\x1b[94m'</em><a class="headerlink" href="#utils.Debug.OKBLUE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.OKGREEN">
+<tt class="descname">OKGREEN</tt><em class="property"> = '\x1b[92m'</em><a class="headerlink" href="#utils.Debug.OKGREEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.WARNING">
+<tt class="descname">WARNING</tt><em class="property"> = '\x1b[93m'</em><a class="headerlink" href="#utils.Debug.WARNING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.FAIL">
+<tt class="descname">FAIL</tt><em class="property"> = '\x1b[91m'</em><a class="headerlink" href="#utils.Debug.FAIL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.BOLD">
+<tt class="descname">BOLD</tt><em class="property"> = '\x1b[1m'</em><a class="headerlink" href="#utils.Debug.BOLD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="utils.Debug.ENDC">
+<tt class="descname">ENDC</tt><em class="property"> = '\x1b[0m'</em><a class="headerlink" href="#utils.Debug.ENDC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="utils.Debug.dump">
+<em class="property">classmethod </em><tt class="descname">dump</tt><big>(</big><em>name</em>, <em>text</em><big>)</big><a class="headerlink" href="#utils.Debug.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="utils.Debug.warn">
+<em class="property">classmethod </em><tt class="descname">warn</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#utils.Debug.warn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="utils.Debug.ok">
+<em class="property">classmethod </em><tt class="descname">ok</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#utils.Debug.ok" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="utils.Debug.fail">
+<em class="property">classmethod </em><tt class="descname">fail</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#utils.Debug.fail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="utils.RawXML">
+<em class="property">class </em><tt class="descclassname">utils.</tt><tt class="descname">RawXML</tt><big>(</big><em>raw_string</em><big>)</big><a class="headerlink" href="#utils.RawXML" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Wrap strings to indicate that they are already formed XML and not to be escaped.</p>
+<p>Create wraper object and store the raw string in it.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>raw_string &#8211; An already formated XML string to be nested in a document.</dd>
+<dt>Attrbutes:</dt>
+<dd>raw_string &#8211; The wraped string.</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="query.html"
+                        title="previous chapter">query Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="errors.html"
+                        title="next chapter">errors Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/utils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="errors Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="query.html" title="query Module"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

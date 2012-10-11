@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>query Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="utils Module" href="utils.html" />
+    <link rel="prev" title="response Module" href="response.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="utils Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="response Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-query">
+<span id="query-module"></span><h1>query Module<a class="headerlink" href="#module-query" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="query.term">
+<tt class="descclassname">query.</tt><tt class="descname">term</tt><big>(</big><em>term</em>, <em>xpath=None</em>, <em>escape=True</em><big>)</big><a class="headerlink" href="#query.term" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escapes &lt;, &gt; and &amp; characters in the given term for inclusion into XML (like the search query).
+Also wrap the term in XML tags if xpath is specified.</p>
+<blockquote>
+<div><p>Note that this function doesn&#8217;t escape the &#64;, $, &#8221; and other symbols that are meaningful in a search query.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>term &#8211; The term text to be escaped (e.g. a search query term).</dd>
+<dt>Keyword args:</dt>
+<dd>xpath &#8211; An optional xpath, to be specified if the term is to wraped in tags.
+escape &#8211; An optional parameter - whether to escape the term&#8217;s XML characters. Default is True.</dd>
+<dt>Returns:</dt>
+<dd>Properly escaped xml string for queries.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">term</span><span class="p">(</span><span class="s">&#39;lorem&lt;4&#39;</span><span class="p">)</span>
+<span class="go">&#39;lorem&amp;lt;4&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">term</span><span class="p">(</span><span class="s">&#39;3 &lt; bar &lt; 5 $$ True&#39;</span><span class="p">,</span> <span class="s">&#39;document/foo&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="go">&#39;&lt;document&gt;&lt;foo&gt;3 &lt; bar &lt; 5 $$ True&lt;/foo&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">term</span><span class="p">(</span><span class="s">&#39;3 &lt; bar &lt; 5 $$ True&#39;</span><span class="p">,</span> <span class="s">&#39;document/foo&#39;</span><span class="p">)</span>
+<span class="go">&#39;&lt;document&gt;&lt;foo&gt;3 &amp;lt; bar &amp;lt; 5 $$ True&lt;/foo&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="query.terms_from_dict">
+<tt class="descclassname">query.</tt><tt class="descname">terms_from_dict</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#query.terms_from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a dict representing a query to a string.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd>source &#8211; A dict with query xpaths as keys and text or nested query dicts as values.</dd>
+<dt>Returns:</dt>
+<dd>A string composed from the nested query terms given.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">terms_from_dict</span><span class="p">({</span><span class="s">&#39;document&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&quot;Title this is&quot;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">:</span> <span class="s">&quot;A long text.&quot;</span><span class="p">}})</span>
+<span class="go">&#39;&lt;document&gt;&lt;text&gt;A long text.&lt;/text&gt;&lt;title&gt;Title this is&lt;/title&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">terms_from_dict</span><span class="p">({</span><span class="s">&#39;document/title&#39;</span><span class="p">:</span> <span class="s">&quot;Title this is&quot;</span><span class="p">,</span> <span class="s">&#39;document/text&#39;</span><span class="p">:</span> <span class="s">&quot;A long text.&quot;</span><span class="p">})</span>
+<span class="go">&#39;&lt;document&gt;&lt;title&gt;Title this is&lt;/title&gt;&lt;/document&gt;&lt;document&gt;&lt;text&gt;A long text.&lt;/text&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="query.and_terms">
+<tt class="descclassname">query.</tt><tt class="descname">and_terms</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#query.and_terms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect given term strings or list(s) of term strings with an AND operator for querying.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>An arbitrary number of either strings or lists of strings representing query terms.</dd>
+<dt>Returns</dt>
+<dd>A query string consisting of argument terms and&#8217;ed together.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="query.or_terms">
+<tt class="descclassname">query.</tt><tt class="descname">or_terms</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#query.or_terms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect given term strings or list(s) of term strings with a OR operator for querying.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>An arbitrary number of either strings or lists of strings representing query terms.</dd>
+<dt>Returns</dt>
+<dd>A query string consisting of argument terms or&#8217;ed together.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="query.not_term">
+<tt class="descclassname">query.</tt><tt class="descname">not_term</tt><big>(</big><em>term</em><big>)</big><a class="headerlink" href="#query.not_term" title="Permalink to this definition">¶</a></dt>
+<dd><p>Negates a given term string.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>A query term string.</dd>
+<dt>Returns</dt>
+<dd>A negated argument term string.</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="response.html"
+                        title="previous chapter">response Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="utils.html"
+                        title="next chapter">utils Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/query.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="utils.html" title="utils Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="response.html" title="response Module"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

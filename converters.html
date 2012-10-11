@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>converters Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="request Module" href="request.html" />
+    <link rel="prev" title="connection Module" href="connection.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="request.html" title="request Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="connection.html" title="connection Module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-converters">
+<span id="converters-module"></span><h1>converters Module<a class="headerlink" href="#module-converters" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="converters.etree_to_dict">
+<tt class="descclassname">converters.</tt><tt class="descname">etree_to_dict</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#converters.etree_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively load dict/list representation of an XML tree into an etree representation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd>source &#8211; An etree Element or ElementTree.</dd>
+<dt>Returns:</dt>
+<dd>A dictionary representing sorce&#8217;s xml structure where tags with multiple identical childrens
+contain list of all their children dictionaries..</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">etree_to_dict</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="s">&#39;&lt;content&gt;&lt;id&gt;12&lt;/id&gt;&lt;title/&gt;&lt;/content&gt;&#39;</span><span class="p">))</span>
+<span class="go">{&#39;content&#39;: {&#39;id&#39;: &#39;12&#39;, &#39;title&#39;: None}}</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">etree_to_dict</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="s">&#39;&lt;content&gt;&lt;list&gt;&lt;li&gt;foo&lt;/li&gt;&lt;li&gt;bar&lt;/li&gt;&lt;/list&gt;&lt;/content&gt;&#39;</span><span class="p">))</span>
+<span class="go">{&#39;content&#39;: {&#39;list&#39;: [{&#39;li&#39;: &#39;foo&#39;}, {&#39;li&#39;: &#39;bar&#39;}]}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="converters.dict_to_etree">
+<tt class="descclassname">converters.</tt><tt class="descname">dict_to_etree</tt><big>(</big><em>source</em>, <em>root_tag=None</em><big>)</big><a class="headerlink" href="#converters.dict_to_etree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively load dict/list representation of an XML tree into an etree representation.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>source &#8211; A dictionary representing an XML document where identical children tags are</dt>
+<dd>countained in a list.</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>root_tag &#8211; A parent tag in which to wrap the xml tree. If None, and the source dict</dt>
+<dd>contains multiple root items, a list of etree&#8217;s Elements will be returned.</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>An ET.Element which is the root of an XML tree or a list of these.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_to_etree</span><span class="p">({</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="s">&#39;lorem&#39;</span><span class="p">})</span> 
+<span class="go">&lt;Element &#39;foo&#39; at 0x...&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dict_to_etree</span><span class="p">({</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="s">&#39;lorem&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">:</span> <span class="s">&#39;ipsum&#39;</span><span class="p">})</span> 
+<span class="go">[&lt;Element &#39;foo&#39; at 0x...&gt;, &lt;Element &#39;bar&#39; at 0x...&gt;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">dict_to_etree</span><span class="p">({</span><span class="s">&#39;document&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;item1&#39;</span><span class="p">:</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;item2&#39;</span><span class="p">:</span> <span class="s">&#39;bar&#39;</span><span class="p">}}))</span>
+<span class="go">&#39;&lt;document&gt;&lt;item2&gt;bar&lt;/item2&gt;&lt;item1&gt;foo&lt;/item1&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">dict_to_etree</span><span class="p">({</span><span class="s">&#39;foo&#39;</span><span class="p">:</span> <span class="s">&#39;baz&#39;</span><span class="p">},</span> <span class="n">root_tag</span><span class="o">=</span><span class="s">&#39;document&#39;</span><span class="p">))</span>
+<span class="go">&#39;&lt;document&gt;&lt;foo&gt;baz&lt;/foo&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ET</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">dict_to_etree</span><span class="p">({</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]},</span> <span class="n">root_tag</span><span class="o">=</span><span class="s">&#39;document&#39;</span><span class="p">))</span>
+<span class="go">&#39;&lt;document&gt;&lt;list&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;/list&gt;&lt;title&gt;foo&lt;/title&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="converters.to_etree">
+<tt class="descclassname">converters.</tt><tt class="descname">to_etree</tt><big>(</big><em>source</em>, <em>root_tag=None</em><big>)</big><a class="headerlink" href="#converters.to_etree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert various representations of an XML structure to a etree Element</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd>source &#8211; The source object to be converted - ET.ElementElementTree, dict or string.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first last docutils">
+<dt>root_tag &#8211; A optional parent tag in which to wrap the xml tree if no root in dict representation.</dt>
+<dd>See dict_to_etree()</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>A etree Element matching the source object.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_etree</span><span class="p">(</span><span class="s">&quot;&lt;content/&gt;&quot;</span><span class="p">)</span>  
+<span class="go">&lt;Element &#39;content&#39; at 0x...&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_etree</span><span class="p">({</span><span class="s">&#39;document&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]}})</span>  
+<span class="go">&lt;Element &#39;document&#39; at 0x...&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_etree</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&#39;root&#39;</span><span class="p">))</span>  
+<span class="go">&lt;Element &#39;root&#39; at 0x...&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="converters.to_raw_xml">
+<tt class="descclassname">converters.</tt><tt class="descname">to_raw_xml</tt><big>(</big><em>source</em><big>)</big><a class="headerlink" href="#converters.to_raw_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert various representations of an XML structure to a normal XML string.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd>source &#8211; The source object to be converted - ET.Element, dict or string.</dd>
+<dt>Returns:</dt>
+<dd>A rew xml string matching the source object.</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_raw_xml</span><span class="p">(</span><span class="s">&quot;&lt;content/&gt;&quot;</span><span class="p">)</span>
+<span class="go">&#39;&lt;content/&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_raw_xml</span><span class="p">({</span><span class="s">&#39;document&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;title&#39;</span><span class="p">:</span> <span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;list&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s">&#39;li&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]}})</span>
+<span class="go">&#39;&lt;document&gt;&lt;list&gt;&lt;li&gt;1&lt;/li&gt;&lt;li&gt;2&lt;/li&gt;&lt;/list&gt;&lt;title&gt;foo&lt;/title&gt;&lt;/document&gt;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">to_raw_xml</span><span class="p">(</span><span class="n">ET</span><span class="o">.</span><span class="n">Element</span><span class="p">(</span><span class="s">&#39;root&#39;</span><span class="p">))</span>
+<span class="go">&#39;&lt;root /&gt;&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="connection.html"
+                        title="previous chapter">connection Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="request.html"
+                        title="next chapter">request Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/converters.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="request.html" title="request Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="connection.html" title="connection Module"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

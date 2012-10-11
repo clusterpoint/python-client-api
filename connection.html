@@ -1,0 +1,584 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>connection Module &mdash; Pycps 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Pycps 0.1 documentation" href="index.html" />
+    <link rel="next" title="converters Module" href="converters.html" />
+    <link rel="prev" title="Pycps 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="converters.html" title="converters Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Pycps 0.1 documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-connection">
+<span id="connection-module"></span><h1>connection Module<a class="headerlink" href="#module-connection" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="connection.Connection">
+<em class="property">class </em><tt class="descclassname">connection.</tt><tt class="descname">Connection</tt><big>(</big><em>host</em>, <em>port</em>, <em>storage</em>, <em>user</em>, <em>password</em>, <em>document_root_xpath='document'</em>, <em>document_id_xpath='./id'</em>, <em>selector_url='/cgi-bin/cps2-cgi'</em>, <em>application='PYCPS'</em>, <em>reply_charset=None</em><big>)</big><a class="headerlink" href="#connection.Connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Connection object class to hold connections with CPS and use them.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For now only http protocol suported!</p>
+</div>
+<p>Create a new connection to CPS.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>host &#8211; A host address string.
+port &#8211; A host port number.
+storage &#8211; A CPS storage name string.
+user &#8211; A user name string.
+password &#8211; A user password string.</dd>
+<dt>Keyword args:</dt>
+<dd>document_root_tag &#8211; A custum document root tag. Default is &#8216;document&#8217;.
+document_id_tag &#8211; A custum document id xpath relative document root. Default is &#8216;./id&#8217;.
+selector_urli &#8211; A nonstandart selector url for xml requests. Default is &#8216;/cgi-bin/cps2-cgi&#8217;.
+application &#8211; Optional application string. Default is &#8216;PYCPS&#8217;.
+reply_charset &#8211; Optional reply charset string.</dd>
+</dl>
+<dl class="method">
+<dt id="connection.Connection.insert">
+<tt class="descname">insert</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a new document in the Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><blockquote class="first">
+<div><dl class="docutils">
+<dt>documents &#8211; A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict</dt>
+<dd>representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
+use add_ids=False and pass list of documents or single document instead of the dict.</dd>
+</dl>
+</div></blockquote>
+<dl class="last docutils">
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>add_ids &#8211; If True argument must be dict with document ids as keys, that will be inserted in documents.</dt>
+<dd>Default is True.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd>A ModifyResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.replace">
+<tt class="descname">replace</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace an existing document in the Clusterpoint Storage based on the id field. Works only if id exists!</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See insert()</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ModifyResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.partial_replace">
+<tt class="descname">partial_replace</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.partial_replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the contents of an existing document in the Clusterpoint Storage based on the id field. Works only if id exists!</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See insert()</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ModifyResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.update">
+<tt class="descname">update</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace an existing document in the Clusterpoint Storage based on the id field and create a new one if no match.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See insert()</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ModifyResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.delete">
+<tt class="descname">delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes a document with the specified ID from the Clusterpoint Storage.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them to be deleted.</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ModifyResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.search_delete">
+<tt class="descname">search_delete</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.search_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the documents that would be returned to the result set by a search command using the same parameters.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>See search()</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A SearchDeleteResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.reindex">
+<tt class="descname">reindex</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.reindex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reindex all of the documents already in the Storage.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A Response object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.backup">
+<tt class="descname">backup</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.backup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Back up the contents of a Storage to a single backup file.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>backup_file &#8211;  String with full path of the backup archive to be created.</dt>
+<dd>File name must end with &#8216;.tar.gz&#8217;.</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd>backup_type &#8211; Backup type string, can be ether &#8216;full&#8217; or &#8216;incremental&#8217;.
+See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A Response object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.restore">
+<tt class="descname">restore</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore the contents of a Storage from a single backup file, that was previously created using a backup command.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>backup_file &#8211; String with full path of the backup archive from whicht to restore.</dt>
+<dd>File name must end with &#8216;.tar.gz&#8217;.</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>sequence_check &#8211;  Check for valid incremental backup sequence if True.</dt>
+<dd>Default is True.</dd>
+</dl>
+<p class="last">See Request.__init__().</p>
+</dd>
+<dt>Returns:</dt>
+<dd>A Response object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.clear">
+<tt class="descname">clear</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the entire contents (except logs) of a Storage.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A Response object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.status">
+<tt class="descname">status</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get  status information of the Storage.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A Response object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.search">
+<tt class="descname">search</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a full text search in the Storage.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd><p class="first">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+list &#8211; Defines which tags of the search results should be listed in the response.</p>
+<blockquote>
+<div>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</div></blockquote>
+<p>facet &#8211; A string of paths for facets or a list of those.
+facet_size &#8211; Maximum number of returned facet value count. Default is 0 - returns all values .
+ordering &#8211;  Defines the order in which results should be returned. Either a string or a list of those. See helper functions for building these.
+agregate &#8211; Defines aggregation queries for the search request.</p>
+<blockquote>
+<div>Ether a single aggregation query string, or a list of strings.</div></blockquote>
+<dl class="docutils">
+<dt>stem_lang &#8211; Stemming language idetificator string. Available are:</dt>
+<dd>&#8216;lv&#8217;, &#8216;en&#8217;, &#8216;ru&#8217;, &#8216;fr&#8217;, &#8216;es&#8217;, &#8216;pt&#8217;, &#8216;it&#8217;, &#8216;ro&#8217;, &#8216;de&#8217;, &#8216;nl&#8217;,
+&#8216;sv&#8217;, &#8216;no&#8217;, &#8216;da&#8217;, &#8216;fi&#8217;, &#8216;hu&#8217;, &#8216;tr&#8217;. Defalt is None.</dd>
+<dt>exact_match &#8211; Exact match option strinig. Available are:</dt>
+<dd>&#8216;text&#8217;, &#8216;binary&#8217;, &#8216;all&#8217;, None. Default is None.</dd>
+</dl>
+<p class="last">group &#8211; Tag name of tag for which groups were created.
+group_size &#8211; Maximum number of documents returned from one group. Default id 0 )no grouping performed).
+See Request.__init__().</p>
+</dd>
+<dt>Returns:</dt>
+<dd>A SearchResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.retrieve">
+<tt class="descname">retrieve</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.retrieve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a document with the specified ID from the Storage.
+Error if a document with this ID does not exist in the Storage.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them.</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.
+See insert()</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.similar">
+<tt class="descname">similar</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for documents that are similar to directly supplied text or to the textual content of an existing document.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>docid &#8211; ID of the source document - the one that You want to search similar documents to.
+len &#8211; Number of keywords to extract from the source.
+quota &#8211; Minimum number of keywords matching in the destination.</dd>
+<dt>Keyword args:</dt>
+<dd>offset &#8211; Number of results to skip before returning the following ones.
+docs &#8211; Number of documents to retrieve. Default is 10.
+query &#8211; An optional query that all found documents have to match against. See Search().
+See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.similar_text">
+<tt class="descname">similar_text</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.similar_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for documents that are similar to directly supplied text or to the textual content of an existing document.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>text &#8211; Text to found something similar to.
+len &#8211; Number of keywords to extract from the source.
+quota &#8211; Minimum number of keywords matching in the destination.</dd>
+<dt>Keyword args:</dt>
+<dd>offset &#8211; Number of results to skip before returning the following ones.
+docs &#8211; Number of documents to retrieve. Default is 10.
+query &#8211; An optional query that all found documents have to match against. See Search().
+See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.lookup">
+<tt class="descname">lookup</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for a document in the Storage by it&#8217;s id.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>doc_ids &#8211; Single document id or a list of them.</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;, &#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">See Request.__init__()</p>
+</dd>
+<dt>Returns:</dt>
+<dd>A LookupResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.alternatives">
+<tt class="descname">alternatives</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.alternatives" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a set of words from the Storage vocabulary that are alternatives to the given word.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>cr &#8211; Minimum ratio between the occurrence of the alternative and the occurrence of the search term.</dt>
+<dd>If this parameter is increased, less results are returned while performance is improved. Default is 2.0.</dd>
+<dt>idif &#8211; A number that limits how much the alternative may differ from the search term,</dt>
+<dd>the greater the idif value, the greater the allowed difference.
+If this parameter is increased, more results are returned while performance is decreased. Default is 3.0.</dd>
+<dt>h &#8211;  A number that limits the overall estimate of the quality of the alternative,</dt>
+<dd>the greater the cr value and the smaller the idif value, the greater the h value.
+If this parameter is increased, less results are returned while performance is improved. Default is 2.5.</dd>
+</dl>
+<p class="last">See Request.__init__()</p>
+</dd>
+<dt>Returns:</dt>
+<dd>A AlternativesResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.list_words">
+<tt class="descname">list_words</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.list_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the list of words corresponding to a search query, i.e. all the words that could possibly match a search query.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><dl class="first last docutils">
+<dt>query &#8211; A query string where all &lt;, &gt; and &amp; characters that aren&#8217;t supposed to be XML</dt>
+<dd>tags, should be escaped or a dict where keys are query xpaths and values ether
+query texts or nested dicts.
+(see term()).</dd>
+</dl>
+</dd>
+<dt>Keyword args:</dt>
+<dd>See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A WordsResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.list_first">
+<tt class="descname">list_first</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.list_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for documents in the Storage that have been inserted, updated, or replaced the longest time ago.
+Keyword args:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;,
+&#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p>docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.list_last">
+<tt class="descname">list_last</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.list_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for documents in the Storage that have been inserted, updated, or replaced most recently.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd><dl class="first docutils">
+<dt>list &#8211; Defines which tags of the search results should be listed in the response.</dt>
+<dd>A dict with tag xpaths as keys and listing option strings (&#8216;yes&#8217;, &#8216;no&#8217;, &#8216;snippet&#8217;,
+&#8216;highlight&#8217;) as values.</dd>
+</dl>
+<p class="last">docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</p>
+</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.retrieve_last">
+<tt class="descname">retrieve_last</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.retrieve_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return compleate documents that are most recently added to the Storage.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.retrieve_first">
+<tt class="descname">retrieve_first</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.retrieve_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return compleate documents that are added to the Storeage the longest time ago.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>docs &#8211; Number of documents to be returned. Default is 10.
+offset &#8211; Offset from the beginning of the result set. Default is 0.
+See Request.__init__()</dd>
+<dt>Returns:</dt>
+<dd>A ListResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.list_paths">
+<tt class="descname">list_paths</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.list_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of all xpaths that are available to the storage.</p>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ListPathsResponse object.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="connection.Connection.list_facets">
+<tt class="descname">list_facets</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#connection.Connection.list_facets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of all terms that the storage has seen for a particular facet (or multiple facets).</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>Args:</dt>
+<dd>paths &#8211; A single facet path string or a list of them.</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>Keyword args:</dt>
+<dd>See Request.__init__().</dd>
+<dt>Returns:</dt>
+<dd>A ListFacetsResponse object.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Pycps 0.1 documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="converters.html"
+                        title="next chapter">converters Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/connection.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="converters.html" title="converters Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Pycps 0.1 documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">Pycps 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Viesturs Silins.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
