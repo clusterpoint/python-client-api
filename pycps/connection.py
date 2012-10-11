@@ -24,7 +24,7 @@ from request import *
 class Connection(object):
     """ Connection object class to hold connections with CPS and use them.
 
-    XXX: FOR NOW ONLY HTTP PROTOCOL SUPORTED!
+    .. note:: For now only http protocol suported!
 
     """
 

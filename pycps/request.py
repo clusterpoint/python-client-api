@@ -20,7 +20,7 @@ import xml.etree.cElementTree as ET
 from utils import *
 from converters import *
 import query
-import response
+from  response import _handle_response
 
 
 class Request(object):
@@ -319,7 +319,7 @@ class Request(object):
         Debug.dump("cont: \n", self._content)
         Debug.dump("nest cont \n", self._nested_content)
         Debug.dump("Request: \n", xml_request)
-        return response._handle_response(self.connection._send_request(xml_request),
+        return _handle_response(self.connection._send_request(xml_request),
                                          self._command, self.connection.document_id_xpath)
 
 
