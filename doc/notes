@@ -1,0 +1,43 @@
+# NOTE: on most comuters replace with python2 and pip2 to python and pip as it is the default
+
+# Build PYPI package
+python2 setup.py sdist
+
+# Register package at the PYPI
+python2 setup.py register
+
+# Build and upload the package to PYPI
+python2 setup.py sdist upload
+
+# Install from tarball
+pip2 install path/to/mypackage.tgz
+
+# Unpack the tarball and then install directly
+tar -xzvf pycps-0.1.0.tar.gz 
+cd pycps-0.1.0/
+python2 setup.py install
+
+
+
+
+Build procedure:
+
+# CWD = very project root
+
+# Push the master to github
+cd pycps
+git checkout master
+git push origin
+
+# Build and upload the package to PYPI
+python2 setup.py sdist upload
+
+# Build static html documentation
+cd doc
+make gh_pages
+
+# Commit and push to github the gh-pages branch
+cd ../../pycps-pages
+git add .
+git commit -m "Updated documents"
+git push origin
