@@ -36,4 +36,3 @@ TODO
 
 ##Support##
 Please feel free to contact the maintainer of this package on silins.viesturs@gmail.com
-
