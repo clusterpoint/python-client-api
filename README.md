@@ -17,6 +17,8 @@ Pycps is a Python API for Clusterpoint Server.
 
 * [Pycps github repository](http://clusterpoint.github.com/pycps/)
 
+* [Pycps PYPI page](http://pypi.python.org/pypi/pycps)
+
 ##Installation##
 You can use the PYPI and install pre made tarball:
 
