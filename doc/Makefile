@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build2
 PAPER         =
-BUILDDIR      = build
+BUILDDIR      = ../../pycps-pages
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
@@ -40,6 +40,13 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+
+gh_pages:
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)
+	-rm -rf $(BUILDDIR)/doctrees
+	-rm -f $(BUILDDIR)/.buildinfo
+	@echo
+	@echo "Build finished. The HTML pages are in $(BUILDDIR)."
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
