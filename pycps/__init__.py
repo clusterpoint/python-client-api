@@ -25,7 +25,11 @@ from request import *
 from response import *
 import query
 
-ET.register_namespace("cps", "www.clusterpoint.com")    # This has global effect.
+etree_version = version_parse(ET.VERSION)
+if etree_version[0] >= 1 and etree_version >= 3:
+    ET.register_namespace("cps", "www.clusterpoint.com")    # This has global effect.
+else: # ET version <1.3 doesn't have register_namespace.
+    ET._namespace_map["www.clusterpoint.com"] = "cps"
 
 if __name__ == '__main__':
     Debug._DEBUG = True

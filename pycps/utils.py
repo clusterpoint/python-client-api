@@ -17,6 +17,10 @@
 
 from __future__ import print_function
 
+import re
+
+def version_parse(version):
+    return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
 
 class Debug(object):
     """Class for printing colored development debuging indormation."""
