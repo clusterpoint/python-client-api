@@ -35,8 +35,6 @@ class Connection(object):
         """ Create a new connection to CPS.
 
             Args:
-                host -- A host address string.
-                port -- A host port number.
                 url -- The connection string containing host, port and scheme of connection.
                         Example: 'tcp://127.0.0.1:5550'.
                 storage -- A CPS storage name string.
