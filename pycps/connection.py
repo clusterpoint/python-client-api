@@ -63,8 +63,8 @@ class Connection(object):
 
     def _set_url(self, url):
         if url in ('unix', 'unix://', '', None):
-            self._scheme = 'socket'
-            self._host = 'unix:///usr/local/cps2/storages/{0}/storage.sock'.\
+            self._scheme = 'unix'
+            self._path = 'unix:///usr/local/cps2/storages/{0}/storage.sock'.\
                         format(self._storage.replace('/', '_'))
             self._port = 0
         else:
@@ -74,23 +74,21 @@ class Connection(object):
                 self._host = url.hostname
                 self._port = url.port if url.port else 80
             elif url.scheme.lower() == 'unix':
-                self._scheme = 'socket'
-                self._host = url.hostname
+                self._scheme = 'unix'
+                self._path = url.path
                 self._port = 0
             elif url.scheme.lower() == 'tcp':
-                self._scheme = 'socket'
+                self._scheme = 'tcp'
                 self._host = url.hostname
-                slef._port = url.port if url.port else 5550
+                self._port = url.port if url.port else 5550
 
     def _open_connection(self):
         """ Select and use the right connection method to connect to the CPS."""
-        try:
-            if self._scheme == 'http':
-                self._connection = self._open_http_connection()
-            else:
-                self._connection = self._open_socket_connection()
-        except:
-            raise ConnectionError()
+        if self._scheme == 'http':
+            self._connection = self._open_http_connection()
+        else:
+            self._connection = self._open_socket_connection()
+
 
     def _open_http_connection(self):
         """ Open a new connection socket to the CPS using the HTTP protocol."""
@@ -98,8 +96,12 @@ class Connection(object):
 
     def _open_socket_connection(self):
         """ Open a new connection socket to the CPS."""
-        self._connection = socket.socket(socket.AF.INET, socket.SOCK_STREAM)
-        self._connection.connect(self._host, self._port)
+        if self._scheme == 'unix':
+            self._connection = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM, 0)
+            self._connection.connect(self._path)
+        elif self._scheme == 'tcp':
+            self._connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.SOL_TCP)
+            self._connection.connect((self._host, self._port))
 
     def _send_request(self, xml_request):
         """ Send the prepared XML request block to the CPS using the corect protocol.

@@ -1,5 +1,6 @@
 TODO:
-unix soketa atbalts (protobuf utt)
+soketa atbalts (protobuf utt)
+    testēt unix soketus
 profilēšana un performances uzlabošana,kur var
     iespējama C extensions taisīšana
 mērīt sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt atbildes objektā
