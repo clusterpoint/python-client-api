@@ -1,55 +1,10 @@
 TODO:
-properties jautājums Request veidošanā
-    atmest not none cheku seteros,jo to iekš send čeko
-tie importi visur ar * nav smuki
-nested_content? Vai kādam laukam tas vajdzīgs? (vnk content likt listu tiem,kam vajaga vaitrākus)
-unix soketa atbalts (protobuf uut)
-mēra sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt
-
-
-NEPILNĪBAS:
-Neatbalsta dict formāta dokumentos,ka tagā ir bērna tagi un brīvs teksts (teksts tikai viens pats tagā) un atribūtus.
-
-
-
-uztaisīt kārtīgu dokumentāciju as Sphinx
-    tam vajdzēs visur kārtīgus komentārus lai var autoģenerēt
-    tutoriāli,referencei (špikot no py-mongo vienā vārdā)
-github salikt metadokuemnetus, readme un tml
-ielikt pip un sataisīt autoinstalēšānos.
-mazo nepilnību un trūkumu izlabošana
-    pec todo
-    neatbilstības php
-    pymango paraga (pārsvarā package organizācijas ziņā)
-    pyliny/pep8
+unix soketa atbalts (protobuf utt)
 profilēšana un performances uzlabošana,kur var
-iespējama C extensions taisīšana
-Django (tornado uc) integrācijas jautājums, Tornado
-
-
-
-
-metožu izsaukumi paplidus apstrādā u natgriež no response objekta tikai relevantos datus (paths list, doc ids utt). Lai tiktu klāt visam, tasia objektu?
-
-
-list un ordering, agregate un kas tur vel.
-set parameter jebkādam custum parameteram.
-
-iziet cauri php meklēt neatbilstības
-
-autoģēnerēta reference
-wiki
-
-eskeipošana:
-    "   &quot;
-    '   &apos;
-    <   &lt;
-    >   &gt;
-    &   &amp
-
-
-
-no converters term pāŗvietot uz moduli jauno, pietaisīt query term arī bez tiem preikāta rīkeim vēl
-rekvestos kveriji akceptē tikai stringus
-
-
+    iespējama C extensions taisīšana
+mērīt sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt atbildes objektā
+    vai arī ieviest DRYRUN opciju, kur visu dara līdz sūtāmo stringu ģenerēšanai, bet izlaiž sūtīšanu
+Django (tornado uc) integrācijas jautājums
+sphinx Makefile pievienot iespēju bildot lokālus dokumentus..
+uztaisīt version release skriptu, kas augšuplādē PYPI un tml
+python3 atbalsts
