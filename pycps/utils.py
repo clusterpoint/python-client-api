@@ -20,7 +20,7 @@ from __future__ import print_function
 import re
 
 def version_parse(version):
-    return [int(x) for x in re.sub(r'(\.0+)*$','', v).split(".")]
+    return [int(x) for x in re.sub(r'(\.0+)*$','', version).split(".")]
 
 class Debug(object):
     """Class for printing colored development debuging indormation."""

@@ -25,11 +25,18 @@ from request import *
 from response import *
 import query
 
-etree_version = version_parse(ET.VERSION)
-if etree_version[0] >= 1 and etree_version >= 3:
-    ET.register_namespace("cps", "www.clusterpoint.com")    # This has global effect.
-else: # ET version <1.3 doesn't have register_namespace.
-    ET._namespace_map["www.clusterpoint.com"] = "cps"
+
+try:
+    _register_namespace = ET.register_namespace
+except AttributeError: # Old versions of ET use _namespace_map
+    try:
+        _namespace_map = ET._namespace_map
+    except AttributeError: # Very old cET use ET module's _namespace_map
+        import xml.etree.ElementTree
+        _namespace_map = xml.etree.ElementTree._namespace_map
+    def _register_namespace(prefix, uri):
+        _namespace_map[uri] = prefix
+_register_namespace("cps", "www.clusterpoint.com")
 
 if __name__ == '__main__':
     Debug._DEBUG = True
