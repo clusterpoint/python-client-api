@@ -15,7 +15,24 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with Pycps.  If not, see <http://www.gnu.org/licenses/>.
 
-import xml.etree.cElementTree as ET
+# TODO: Raise warning if lxml not used as it is much faster.
+try:
+    from lxml import etree as ET
+except ImportError:
+    try:
+        # Python 2.5 cET
+        import xml.etree.cElementTree as ET
+    except ImportError:
+        try:
+        # Python 2.5 plain ET
+            import xml.etree.ElementTree as ET
+        except ImportError:
+            try:
+                # old cET
+                import cElementTree as ET
+            except ImportError:
+                # old ET
+                import elementtree.ElementTree as ET
 
 from utils import *
 from converters import *

@@ -15,7 +15,24 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with Pycps.  If not, see <http://www.gnu.org/licenses/>.
 
-import xml.etree.cElementTree as ET
+# TODO: Raise warning if lxml not used as it is much faster.
+try:
+    from lxml import etree as ET
+except ImportError:
+    try:
+        # Python 2.5 cET
+        import xml.etree.cElementTree as ET
+    except ImportError:
+        try:
+        # Python 2.5 plain ET
+            import xml.etree.ElementTree as ET
+        except ImportError:
+            try:
+                # old cET
+                import cElementTree as ET
+            except ImportError:
+                # old ET
+                import elementtree.ElementTree as ET
 
 from utils import *
 from errors import *
@@ -80,10 +97,10 @@ def dict_to_etree(source, root_tag=None):
             An ET.Element which is the root of an XML tree or a list of these.
 
     >>> dict_to_etree({'foo': 'lorem'}) #doctest: +ELLIPSIS
-    <Element 'foo' at 0x...>
+    <Element foo at 0x...>
 
     >>> dict_to_etree({'foo': 'lorem', 'bar': 'ipsum'}) #doctest: +ELLIPSIS
-    [<Element 'foo' at 0x...>, <Element 'bar' at 0x...>]
+    [<Element foo at 0x...>, <Element bar at 0x...>]
 
     >>> ET.tostring(dict_to_etree({'document': {'item1': 'foo', 'item2': 'bar'}}))
     '<document><item2>bar</item2><item1>foo</item1></document>'
@@ -135,17 +152,17 @@ def to_etree(source, root_tag=None):
             A etree Element matching the source object.
 
     >>> to_etree("<content/>")  #doctest: +ELLIPSIS
-    <Element 'content' at 0x...>
+    <Element content at 0x...>
 
     >>> to_etree({'document': {'title': 'foo', 'list': [{'li':1}, {'li':2}]}})  #doctest: +ELLIPSIS
-    <Element 'document' at 0x...>
+    <Element document at 0x...>
 
     >>> to_etree(ET.Element('root'))  #doctest: +ELLIPSIS
-    <Element 'root' at 0x...>
+    <Element root at 0x...>
     """
-    if isinstance(source, ET.ElementTree):
+    if hasattr(source, 'get_root'): #XXX:
         return source.get_root()
-    elif isinstance(source, type(ET.Element(None))):    # cElementTree.Element isn't exposed directly
+    elif isinstance(source, type(ET.Element('x'))):    #XXX: # cElementTree.Element isn't exposed directly
         return source
     elif isinstance(source, basestring):
         try:
@@ -174,7 +191,7 @@ def to_raw_xml(source):
     '<document><list><li>1</li><li>2</li></list><title>foo</title></document>'
 
     >>> to_raw_xml(ET.Element('root'))
-    '<root />'
+    '<root/>'
     """
     if isinstance(source, basestring):
         return source
