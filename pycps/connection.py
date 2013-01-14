@@ -224,20 +224,28 @@ class Connection(object):
 
         def socket_send(data):
             sent_bytes = 0
+            failures = 0
             total_bytes = len(data)
             while sent_bytes < total_bytes:
                 sent = self._connection.send(data[sent_bytes:])
                 if sent == 0:
-                    raise ConnectionError()
+                    failures += 1
+                    if failures > 5:
+                        raise ConnectionError()
+                    continue
                 sent_bytes += sent
 
         def socket_recieve(lenght):
             total_recieved = 0
+            failures = 5
             recieved_chunks = []
-            while total_recieved < lenght:
+            while total_recieved<lenght:
                 chunk = self._connection.recv(lenght-total_recieved)
                 if chunk == '':
-                    raise ConnectionError()
+                    failures += 1
+                    if failures > 5:
+                        raise ConnectionError()
+                    continue
                 recieved_chunks.append(chunk)
                 total_recieved += len(chunk)
             return ''.join(recieved_chunks)
@@ -251,7 +259,7 @@ class Connection(object):
         except (ConnectionError, socket.error):
             self._connection.close()
             self._open_connection()
-            socket_send(header+pb_bytes)
+            socket_send(header+encoded_message)
 
         # TODO: timeout
         header = socket_recieve(8)
