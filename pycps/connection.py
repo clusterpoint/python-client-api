@@ -241,7 +241,7 @@ class Connection(object):
             recieved_chunks = []
             while total_recieved<lenght:
                 chunk = self._connection.recv(lenght-total_recieved)
-                if chunk == '':
+                if not chunk:
                     failures += 1
                     if failures > 5:
                         raise ConnectionError()
