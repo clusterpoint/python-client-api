@@ -196,9 +196,9 @@ def to_raw_xml(source):
     if isinstance(source, basestring):
         return source
     elif hasattr(source, 'getiterator'):    # Element or ElementTree.
-        return ET.tostring(source, encoding="utf-8", method="xml")
+        return ET.tostring(source, encoding="utf-8")
     elif hasattr(source, 'keys'):   # Dict.
         xml_root = dict_to_etree(source)
-        return ET.tostring(xml_root, encoding="utf-8", method="xml")
+        return ET.tostring(xml_root, encoding="utf-8")
     else:
         raise TypeError("Accepted representations of a document are string, dict and etree")

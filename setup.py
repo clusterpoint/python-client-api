@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='pycps',
-    version='0.2.1',
+    version='0.2.3',
     author='Viesturs Silins',
     author_email='example@example.com',
     packages=['pycps'],

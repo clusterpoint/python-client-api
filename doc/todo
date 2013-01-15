@@ -3,8 +3,7 @@ socketu timeout
 mistiskais connectionError, kad lasa 8 baitu hederi, pec tma kad aizsūtīts pa to soketu!
 ja ir strings un nevajaga addot ids, tad nevajaga stringu parsēt uz etree
     (un varbūt arī, ja jāpevieno stringam id, var parsēt tikai tik dziļi,cik vajaga)
-migrēt uz lxml? Laikam ātrāki krietni uz xml out
-citu ET versiju atbalsts...
+dokumentācijā par lxml vajdzību uzrakstīt un pievienot automātiskajai instalēšanai
 profilēšana un performances uzlabošana,kur var
     iespējama C extensions taisīšana
 mērīt sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt atbildes objektā
