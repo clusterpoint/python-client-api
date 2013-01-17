@@ -66,17 +66,19 @@ class Request(object):
         self._nested_content = {}   # TODO: Not needed?
         self._documents = []    # List of document strings containing documents.
 
-    def set_documents(self, documents, add_ids=True):
+    def set_documents(self, documents, fully_formed=False):
         """ Wrap documents in the correct root tags, add id fields and convert them to xml strings.
 
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
-                add_ids -- If True argument must be dict with document ids as keys, that will be inserted in documents.
-                            Default is True.
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
         """
         def add_id(document, id):
             def make_id_tag(root, rel_path, max_depth):
@@ -92,9 +94,12 @@ class Request(object):
                     return make_id_tag(child, rel_path[1:], max_depth - 1)
             make_id_tag(document, doc_id_xpath, 10).text = str(id)
 
-        doc_root_tag = self.connection.document_root_xpath  # Local scope is faster.
-        doc_id_xpath = self.connection.document_id_xpath.split('/')
-        if add_ids:     # Documents is dict with ids as keys.
+        if fully_formed: # documents is a list or single document that contians root tags and id fields. 
+            if not isinstance(documents, list):
+                documents = [documents]
+        else: # documents is dict with ids as keys and documents as values.
+            doc_root_tag = self.connection.document_root_xpath  # Local scope is faster.
+            doc_id_xpath = self.connection.document_id_xpath.split('/')
             # Convert to etrees.
             documents = dict([(id, to_etree((document if document is not None else
                                              query.term('', doc_root_tag)), doc_root_tag))
@@ -108,16 +113,6 @@ class Request(object):
             for id, document in documents.items():
                 add_id(document, id)
             documents = documents.values()
-        else:  # documents is a list of documents(no id) OR a single document(no id).
-            if not isinstance(documents, list):
-                documents = [documents]
-            # Convert to etrees.
-            documents = [to_etree(document, doc_root_tag) for document in documents]
-            # If root not the same as given xpath, make new root and append to it.
-            for i, document in enumerate(documents):
-                if document.tag != doc_root_tag:
-                    documents[i] = ET.Element(doc_root_tag)
-                    documents[i].append(document)
         self._documents = map(to_raw_xml, documents)
 
     def set_doc_ids(self, doc_ids):
@@ -127,9 +122,9 @@ class Request(object):
                 doc_ids -- A document id or a lost of those.
         """
         if isinstance(doc_ids, list):
-            self.set_documents(dict.fromkeys(doc_ids), add_ids=True)
+            self.set_documents(dict.fromkeys(doc_ids))
         else:
-            self.set_documents({doc_ids: None}, add_ids=True)
+            self.set_documents({doc_ids: None})
 
     def add_property(self, set_property, name, starting_value, tag_name=None):
         """ Set properies of atributes stored in content using stored common fdel and fget and given fset.
@@ -376,34 +371,39 @@ class RestoreRequest(Request):
 
 class ModifyRequest(Request):
     """ Base request for insert, update, replace and partial_replace command requests."""
-    def __init__(self, connection, documents, add_ids=True, **kwargs):
+    def __init__(self, connection, documents, fully_formed=False, **kwargs):
         """
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
-                See Request.__init__()
-
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
-                add_ids -- If True argument must be dict with document ids as keys, that will be inserted in documents.
-                            Default is True.
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
+
                 See Request.__init__().
         """
         Request.__init__(self, connection, None, **kwargs)
-        self.set_documents(documents, add_ids)
+        self.set_documents(documents, fully_formed)
 
 
 class InsertRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
-                See Request.__init__().
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
+
                 See Request.__init__().
         """
         ModifyRequest.__init__(self, *args, **kwargs)
@@ -414,12 +414,16 @@ class UpdateRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
-                See Request.__init__().
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
+
                 See Request.__init__().
         """
         ModifyRequest.__init__(self, *args, **kwargs)
@@ -430,12 +434,16 @@ class ReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
-                See Request.__init__().
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
+
                 See Request.__init__().
         """
         ModifyRequest.__init__(self, *args, **kwargs)
@@ -446,12 +454,16 @@ class PartialReplaceRequest(ModifyRequest):
     def __init__(self, *args, **kwargs):
         """
             Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
-                See Request.__init__().
+                documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                            xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                            If fully_formed is True, accepts list or single document where ids are integrated in document or
+                            not needed and document has the right root tag.
 
             Keyword args:
+                fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                            to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                            a single document can be pased as 'documents', not a dict of documents. Default is False.
+
                 See Request.__init__().
         """
         ModifyRequest.__init__(self, *args, **kwargs)

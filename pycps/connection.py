@@ -278,14 +278,15 @@ class Connection(object):
         """ Insert a new document in the Clusterpoint Storage.
 
         Args:
-                documents -- A dict where keys are document ids and values can be ether xml string, etree.ElementTree or dict
-                            representation of an xml document (see dict_to_etree()). If Ids are integrated in document or not needed,
-                            use add_ids=False and pass list of documents or single document instead of the dict.
+            documents -- If fully_formed is False (default), accepts dict where keys are document ids and values can be ether
+                        xml string, etree.ElementTree or dict representation of an xml document (see dict_to_etree()).
+                        If fully_formed is True, accepts list or single document where ids are integrated in document or
+                        not needed and document has the right root tag.
 
-            Keyword args:
-                add_ids -- If True argument must be dict with document ids as keys, that will be inserted in documents.
-                            Default is True.
-                See :class:`Request`
+        Keyword args:
+            fully_formed  -- If documents are fully formed (contains the right root tags and id fields) set to True
+                        to avoid the owerhead of documets beeing parsed at all. If set to True only list of documents or
+                        a single document can be pased as 'documents', not a dict of documents. Default is False.
 
         Returns:
             A ModifyResponse object.
