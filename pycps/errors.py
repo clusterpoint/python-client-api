@@ -129,4 +129,4 @@ class ResponseError(CPSError):
         self.response = response
 
     def __str__(self):
-        return "Invalid XML response recieved: " + response
+        return "Invalid XML response recieved: " + self.response
