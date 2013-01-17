@@ -11,4 +11,4 @@ mērīt sūtīšanas laiku (tikai sūtīšanas jau sarenderētu),ko var dabūt a
 Django (tornado uc) integrācijas jautājums
 sphinx Makefile pievienot iespēju bildot lokālus dokumentus..
 uztaisīt version release skriptu, kas augšuplādē PYPI un tml
-python3 atbalsts
+python3 atbalsts (2.6-3.3)
