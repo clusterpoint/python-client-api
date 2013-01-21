@@ -4,7 +4,7 @@ setup(
     name='pycps',
     version='0.2.3',
     author='Viesturs Silins',
-    author_email='example@example.com',
+    author_email='silins.viesturs@gmail.com',
     packages=['pycps'],
     url='https://github.com/clusterpoint/pycps',
     license='GNU Affero General Public License',

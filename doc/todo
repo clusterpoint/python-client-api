@@ -1,4 +1,5 @@
 TODO:
+labāki testi
 socketu timeout
 mistiskais connectionError, kad lasa 8 baitu hederi, pec tma kad aizsūtīts pa to soketu!
 ja ir strings un nevajaga addot ids, tad nevajaga stringu parsēt uz etree
