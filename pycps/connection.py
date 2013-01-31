@@ -82,7 +82,7 @@ class Connection(object):
                 self._host = url.hostname
                 self._port = url.port if url.port else 5550
             else:
-                raise ParameterError(url)
+                raise ParameterError(dump=url)
 
     def _open_connection(self):
         """ Open a new connection socket to the CPS."""
