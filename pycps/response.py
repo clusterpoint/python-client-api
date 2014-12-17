@@ -310,7 +310,7 @@ class SearchResponse(ListResponse):
             Returns:
                 A dict in with queries as keys and results as values.
         """
-        return dict([(aggregate.find('query').text, ET.tostring(self._content.find('aggregate').find('data')).lstrip("<data>").strip().rstrip("</data>"))
+        return dict([(aggregate.find('query').text, [(ET.tostring(data).lstrip("<data>").strip().rstrip("</data>")) for data in aggregate.findall('data')])
                    for aggregate in self._content.findall('aggregate')])
 
 
