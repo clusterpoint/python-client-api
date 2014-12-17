@@ -2,9 +2,9 @@ from distutils.core import setup
 
 setup(
     name='pycps',
-    version='0.2.5',
-    author='Viesturs Silins',
-    author_email='silins.viesturs@gmail.com',
+    version='0.2.6',
+    author='Peteris Krisjanis',
+    author_email='pecisk@gmail.com',
     packages=['pycps'],
     url='https://github.com/clusterpoint/pycps',
     license='GNU Affero General Public License',
