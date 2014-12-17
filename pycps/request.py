@@ -206,9 +206,9 @@ class Request(object):
             else:
                 self._content['ordering'] = '\n'.join(value)
 
-    def set_agregate(self, value):
+    def set_aggregate(self, value):
         if value is not None:
-            self._content['agregate'] = value
+            self._content['aggregate'] = value
 
     def set_facet(self, value):
         if value is not None:
