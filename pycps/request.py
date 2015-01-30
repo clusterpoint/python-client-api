@@ -288,7 +288,8 @@ class Request(object):
                 fields += ['<cps:application>', self.connection.application, '</cps:application>\n']
             fields += ['<cps:command>', self._command, '</cps:command>\n',
                        '<cps:user>', self.connection._user, '</cps:user>\n',
-                       '<cps:password>', self.connection._password, '</cps:password>\n']
+                       '<cps:password>', self.connection._password, '</cps:password>\n',
+                       '<cps:account>', self.connection._account, '</cps:account>\n']
             if self.timeout:
                 fields += ['<cps:timeout>', str(self.timeout), '</cps:timeout>\n']
             if self.type:
