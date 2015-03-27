@@ -748,3 +748,22 @@ class ListFacetsRequest(Request):
         """
         Request.__init__(self, connection, 'list-facets', **kwargs)
         self.add_property(self.set_path, 'paths', paths, 'path')
+
+class CreateDatabaseRequest(Request):
+    """ Base class for first/last retrieve/list commands."""
+    def __init__(self, connection, database_name, **kwargs):
+        """
+            Args:
+                See Request.__init__().
+
+            Keyword args:
+                list -- Defines which tags of the search results should be listed in the response.
+                        A dict with tag xpaths as keys and listing option strings ('yes', 'no',
+                        'snippet', 'highlight') as values.
+                docs -- Number of documents to be returned. Default is 10.
+                offset -- Offset from the beginning of the result set. Default is 0.
+                See Request.__init__()
+        """
+        Request.__init__(self, connection, None, **kwargs)
+        self.add_property(self.set_name, 'name', database_name)
+        self._command = 'create-database'
