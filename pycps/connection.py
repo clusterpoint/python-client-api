@@ -29,7 +29,7 @@ class Connection(object):
 
     """
 
-    def __init__(self, url, storage, user, password,
+    def __init__(self, url, storage, user, password, account,
                     document_root_xpath = 'document', document_id_xpath = './id',
                     selector_url = '/cgi-bin/cps2-cgi', application='PYCPS',  reply_charset=None):
         """ Create a new connection to CPS.
@@ -40,6 +40,7 @@ class Connection(object):
                 storage -- A CPS storage name string.
                 user -- A user name string.
                 password -- A user password string.
+                account -- A account string.
 
             Keyword args:
                 document_root_tag -- A custum document root tag. Default is 'document'.
@@ -51,6 +52,7 @@ class Connection(object):
         self._storage = storage
         self._user = user
         self._password = password
+        self._account = account
         self._selector_url = selector_url
 
         self.document_root_xpath = document_root_xpath

@@ -35,4 +35,4 @@ Or to build the package and install it manually:
 TODO
 
 ##Support##
-Please feel free to contact the maintainer of this package on silins.viesturs@gmail.com
+Please feel free to contact the maintainer of this package on pecisk@gmail.com

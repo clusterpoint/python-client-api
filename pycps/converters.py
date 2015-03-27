@@ -120,7 +120,7 @@ def dict_to_etree(source, root_tag=None):
             for element in source:
                 dict_to_etree_recursive(element, parent)
         else:   # TODO: Add feature to include xml literals as special objects or a etree subtree
-            parent.text = str(source)
+            parent.text = source
 
     if root_tag is None:
         if len(source) == 1:

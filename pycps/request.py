@@ -206,9 +206,9 @@ class Request(object):
             else:
                 self._content['ordering'] = '\n'.join(value)
 
-    def set_agregate(self, value):
+    def set_aggregate(self, value):
         if value is not None:
-            self._content['agregate'] = value
+            self._content['aggregate'] = value
 
     def set_facet(self, value):
         if value is not None:
@@ -288,7 +288,8 @@ class Request(object):
                 fields += ['<cps:application>', self.connection.application, '</cps:application>\n']
             fields += ['<cps:command>', self._command, '</cps:command>\n',
                        '<cps:user>', self.connection._user, '</cps:user>\n',
-                       '<cps:password>', self.connection._password, '</cps:password>\n']
+                       '<cps:password>', self.connection._password, '</cps:password>\n',
+                       '<cps:account>', self.connection._account, '</cps:account>\n']
             if self.timeout:
                 fields += ['<cps:timeout>', str(self.timeout), '</cps:timeout>\n']
             if self.type:
@@ -747,3 +748,22 @@ class ListFacetsRequest(Request):
         """
         Request.__init__(self, connection, 'list-facets', **kwargs)
         self.add_property(self.set_path, 'paths', paths, 'path')
+
+class CreateDatabaseRequest(Request):
+    """ Base class for first/last retrieve/list commands."""
+    def __init__(self, connection, database_name, **kwargs):
+        """
+            Args:
+                See Request.__init__().
+
+            Keyword args:
+                list -- Defines which tags of the search results should be listed in the response.
+                        A dict with tag xpaths as keys and listing option strings ('yes', 'no',
+                        'snippet', 'highlight') as values.
+                docs -- Number of documents to be returned. Default is 10.
+                offset -- Offset from the beginning of the result set. Default is 0.
+                See Request.__init__()
+        """
+        Request.__init__(self, connection, None, **kwargs)
+        self.add_property(self.set_name, 'name', database_name)
+        self._command = 'create-database'
