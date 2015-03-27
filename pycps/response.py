@@ -284,9 +284,9 @@ class ListResponse(Response):
 
 class LookupResponse(ListResponse):
     """ LookupResponse object to a request to Clusterpoint Storage. """
-    def _get_doc_list(self):
-        # Lookup returns documents in content tag, not in results subtag.
-        return self._content.findall('document')
+    # def _get_doc_list(self):
+    #     # Lookup returns documents in content tag, not in results subtag.
+    #     return self._content.findall('document')
 
 
 class SearchResponse(ListResponse):

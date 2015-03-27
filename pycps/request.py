@@ -507,7 +507,7 @@ class SearchRequest(Request):
         self.add_property(self.set_offset, 'offset', offset)
         self.add_property(self.set_list, 'list', list)
         self.add_property(self.set_ordering, 'odering', ordering)   # TODO: helper method
-        self.add_property(self.set_agregate, 'agregate', agregate)  # TODO: Check details
+        self.add_property(self.set_aggregate, 'agregate', agregate)  # TODO: Check details
         self.add_property(self.set_facet, 'facet', facet)
         self.add_property(self.set_facet_size, 'facet_size', facet_size)
         self.add_property(self.set_stem_lang, 'stem_lang', stem_lang)
@@ -525,7 +525,7 @@ class ListWordsRequest(SearchRequest):
                         query texts or nested dicts.
                         (see term()).
                 See Request.__init__().
-
+ListWordsRequest
             Keyword args:
                 See Request.__init__().
         """

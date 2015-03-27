@@ -1,38 +1,32 @@
-#pycps - Clusterpoint Server Python API library#
+#python-client-api - Clusterpoint Server Python API library#
 
 ---
 ##About##
-Clusterpoint Server is a scalable high-speed NoSQL database technology with Google-like search. 
-Pycps is a Python API for Clusterpoint Server. 
+Clusterpoint Server is a scalable high-speed NoSQL database technology
+with Google-like search. 
+python-client-api is a Python API for Clusterpoint Server.
 
 ##Useful links##
 
 * [Clusterpoint Ltd. web page](http://www.clusterpoint.com/)
 
-* [Clusterpoint wiki](http://www.clusterpoint.com/wiki/Main_Page)
+* [Clusterpoint documentation site](http://docs.clusterpoint.com/)
 
-* [Clusterpoint API reference including Python](http://www.clusterpoint.com/wiki/Reference)
+* [Clusterpoint API reference including
+Python](http://docs.clusterpoint.com/wiki/Reference)
 
-* [Pycps library documentation](http://clusterpoint.github.com/pycps/)
+* [Clusterpoint Python API library
+overview](http://docs.clusterpoint.com/wiki/Python_API_overview)
 
-* [Pycps github repository](http://clusterpoint.github.com/pycps/)
-
-* [Pycps PYPI page](http://pypi.python.org/pypi/pycps)
+* [python-client-api github
+repository](https://github.com/clusterpoint/python-client-api)
 
 ##Installation##
-You can use the PYPI and install pre made tarball:
 
-`pip install pycps`
-
-Or to build the package and install it manually:
-`tar -xzvf pycps-0.1.0.tar.gz`
-
-`cd pycps-0.1.0/`
+Use Python distutils to install Clusterpoint Python client from source:
 
 `sudo python2 setup.py install`
 
-##Usage##
-TODO
-
 ##Support##
-Please feel free to contact the maintainer of this package on pecisk@gmail.com
+Please feel free to contact the maintainer of this package on
+suport@clusterpoint.com
