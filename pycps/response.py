@@ -254,6 +254,11 @@ class ListResponse(Response):
         elif doc_format == 'etree':
             return dict([(get_doc_id(document, self._id_xpath), document) for
                         document in self._get_doc_list()])
+        elif doc_format == 'list-etree':
+            return self._get_doc_list()
+        elif doc_format == 'list-string':
+            return list([(ET.tostring(document)) for
+                        document in self._get_doc_list()])
         elif doc_format in ('', None, 'string'):
             return dict([(get_doc_id(document, self._id_xpath), ET.tostring(document)) for
                         document in self._get_doc_list()])
