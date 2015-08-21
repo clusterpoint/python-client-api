@@ -1,25 +1,15 @@
-#python-client-api - Clusterpoint Server Python API library#
+#python-client-api#
+==============
 
----
-##About##
-Clusterpoint Server is a scalable high-speed NoSQL database technology
-with Google-like search. 
-python-client-api is a Python API for Clusterpoint Server.
+##Clusterpoint Python client API##
 
-##Useful links##
+* [Clusterpoint WEB page](https://www.clusterpoint.com)
 
-* [Clusterpoint Ltd. web page](http://www.clusterpoint.com/)
+* [Clusterpoint Documentation page](https://www.clusterpoint.com/docs/)
 
-* [Clusterpoint documentation site](http://docs.clusterpoint.com/)
+* [Clusterpoint API library reference and examples](https://www.clusterpoint.com/docs/?page=Reference)
 
-* [Clusterpoint API reference including
-Python](http://docs.clusterpoint.com/wiki/Reference)
-
-* [Clusterpoint Python API library
-overview](http://docs.clusterpoint.com/wiki/Python_API_overview)
-
-* [python-client-api github
-repository](https://github.com/clusterpoint/python-client-api)
+* [Clusterpoint tutorials](https://www.clusterpoint.com/docs/?page=Tutorials)
 
 ##Installation##
 
@@ -29,4 +19,4 @@ Use Python distutils to install Clusterpoint Python client from source:
 
 ##Support##
 Please feel free to contact the maintainer of this package on
-suport@clusterpoint.com
+support@clusterpoint.com

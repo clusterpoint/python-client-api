@@ -49,6 +49,7 @@ class Connection(object):
                 application -- Optional application string. Default is 'PYCPS'.
                 reply_charset -- Optional reply charset string.
         """
+        self._debug = 0
         self._storage = storage
         self._user = user
         self._password = password
@@ -62,6 +63,10 @@ class Connection(object):
 
         self._set_url(url)
         self._open_connection()
+
+    def setDebug(self, deb = 0):
+        if(deb == 1):
+            self._debug = 1
 
     def _set_url(self, url):
         if url in ('unix', 'unix://', '', None):
@@ -271,7 +276,7 @@ class Connection(object):
         encoded_response = socket_recieve(lenght)
         response = decode_fields(encoded_response)
         # TODO: Test for id=3 error message
-        # TODO: check for and raise errors 
+        # TODO: check for and raise errors
         return response[1]
 
 
